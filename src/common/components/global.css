@@ -1,0 +1,27 @@
+body, p,div, input{
+    font-family: arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    color: #bababa;
+  }
+
+  /* body, p,div{
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: #242526;
+    overflow: hidden;
+  } */
+
+.item-basic{
+    color: '#afb3b6';
+    /* color: gray; */
+    font-size: 12px;
+}
+
+.post-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

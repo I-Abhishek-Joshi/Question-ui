@@ -1,0 +1,15 @@
+.card-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px 12px;
+}
+
+.cross {
+    padding: 5px;
+}
+.cross:hover {
+    background-color: rgb(57, 56, 56);
+    border-radius: 50%;
+    cursor: pointer;
+}

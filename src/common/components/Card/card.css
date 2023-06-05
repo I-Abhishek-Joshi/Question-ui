@@ -1,0 +1,9 @@
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #242526; 
+    /* background-color: red; */
+    width: 680px;
+  }
