@@ -1,14 +1,11 @@
 import "./App.css";
-import Card from "./common/components/Card/card";
-import CreatePost from "./common/components/CreatePost/createPost";
+import CardDetails from "./common/components/CardDetails/cardDetails";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App gradient-background">
       <header className="App-header">
-          {/* <CreatePost></CreatePost>
-          <CreatePost></CreatePost> */}
-          <Card></Card>
+        <CardDetails></CardDetails>
       </header>
     </div>
   );
