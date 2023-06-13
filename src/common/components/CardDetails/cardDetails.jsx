@@ -29,13 +29,11 @@ const CardDetails = () => {
       spacing={1}
       bgcolor={"white"}
       color={"black"}
-      maxWidth={900}
       overflow={"hidden"}
       style={{
         borderRadius: "10px",
         boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)",
       }}
-      md={12}
     >
       <Grid item xs={2}>
         {/* Block 1 */}
@@ -180,7 +178,7 @@ const CardDetails = () => {
             />
             <Typography
               variant="body1"
-              ml={1}
+              ml={0.5}
               mr={2}
               color={defaultColor}
               fontSize={"12px"}
@@ -192,7 +190,8 @@ const CardDetails = () => {
             />
             <Typography
               variant="body1"
-              ml={1}
+              ml={0.5}
+              mr={2}
               color={defaultColor}
               fontSize={"12px"}
             >
@@ -203,7 +202,7 @@ const CardDetails = () => {
             <CommentIcon style={{ color: defaultColor, fontSize: "15px" }} />
             <Typography
               variant="body1"
-              ml={1}
+              ml={0.5}
               mr={2}
               color={defaultColor}
               fontSize={"12px"}
@@ -213,7 +212,8 @@ const CardDetails = () => {
             <VisibilityIcon style={{ color: defaultColor, fontSize: "15px" }} />
             <Typography
               variant="body1"
-              ml={1}
+              ml={0.5}
+              mr={2}
               color={defaultColor}
               fontSize={"12px"}
             >

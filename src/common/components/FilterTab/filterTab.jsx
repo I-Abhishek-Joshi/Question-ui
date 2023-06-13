@@ -37,34 +37,39 @@ const FilterTab = () => {
   const primary = "#0000FF";
   const chipColor = "#4C67FD";
   return (
-    <Grid md={12}>
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        borderRadius={"10px"}
-        overflow={"hidden"}
-        bgcolor={"white"}
-      >
+    <Grid
+      container
+      bgcolor={"white"}
+      color={"black"}
+      overflow={"hidden"}
+      display={"flex"}
+      direction={"column"}
+      style={{
+        borderRadius: "10px",
+        boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)",
+      }}>
         <Box
           display={"flex"}
           flexDirection={"column"}
           alignItems={"flex-start"}
+          justifyItems={"flex-start"}
         >
           <Typography
             bgcolor={categoryHeaderColor}
-            style={{ padding: "5px 30px" }}
+            style={{ padding: "5px 30px"}}
             color={success}
             fontWeight={600}
             fontSize={15}
           >
             Category
           </Typography>
+          
 
           {renderedItems.map((item) => (
             <Typography
               key={item}
               color={"black"}
-              style={{ padding: "5px 30px" }}
+              style={{ padding: "5px 30px"}}
               fontSize={15}
             >
               {item}
@@ -83,7 +88,7 @@ const FilterTab = () => {
           {expanded && (
             <Typography
               style={{ padding: "5px 30px", cursor: "pointer" }}
-              color={primary}
+              color={"primary"}
               onClick={() => setExpanded(false)}
               fontSize={14}
             >
@@ -93,7 +98,6 @@ const FilterTab = () => {
         </Box>
         <Divider style={{ backgroundColor: "gray" }}></Divider>
         <Box
-          maxWidth={"200px"}
           display={"flex"}
           flexDirection={"column"}
           alignItems={"flex-start"}
@@ -121,7 +125,6 @@ const FilterTab = () => {
             ))}
           </Box>
         </Box>
-      </Box>
     </Grid>
   );
 };
