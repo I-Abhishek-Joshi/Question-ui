@@ -20,7 +20,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 const CardDetails = () => {
   const chipColor = "#F0F0F0";
   const success = "#4BB543";
-  const primary = "#0000FF";
+  const primary = "#0275FF";
   const orange = "#ff781f";
   const defaultColor = "#848484";
   return (

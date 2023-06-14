@@ -1,10 +1,18 @@
-import { Box, Grid, Typography, Avatar, Accordion } from "@mui/material";
+import { Box, Grid, Typography, Avatar } from "@mui/material";
 import React from "react";
 import face from "../../assets/images/face.jpg";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import Dropdown from "../Dropdown/dropdown";
 
 const Profile = () => {
   const profileNameColor = "#ee9f27";
+  const topDropdownOptions = [
+    "Office",
+    "Shema Websites",
+    "Jensera project",
+    "Elementary School Friends",
+    "Trip Wandeears",
+  ];
   return (
     <Grid
       container
@@ -51,6 +59,12 @@ const Profile = () => {
             Associate Software Engineer
           </Typography>
         </Grid>
+      </Box>
+      <Box style={{ margin: "50px auto 5px" }}>
+        <Dropdown heading={"Channel"} options={topDropdownOptions} />
+      </Box>
+      <Box style={{ margin: "10px auto 5px" }}>
+        <Dropdown heading={"Channel"} options={topDropdownOptions} />
       </Box>
     </Grid>
   );

@@ -3,19 +3,20 @@ import "./App.css";
 import CardDetails from "./common/components/CardDetails/cardDetails";
 import FilterTab from "./common/components/FilterTab/filterTab";
 import Profile from "./common/components/Profile/profile";
+import Dropdown from "./common/components/Dropdown/dropdown";
 
 function App() {
   return (
     <div className="App">
-      <Grid container spacing={4} p={2}>
-        <Grid item md={2}>
-          <FilterTab/>
+      <Grid>
+        <Grid>
+          <Profile />
         </Grid>
-        <Grid item md={8}>
-          <CardDetails/>
+        <Grid>
+          <CardDetails />
         </Grid>
-        <Grid item md={2}>
-          <FilterTab/>
+        <Grid>
+          <FilterTab />
         </Grid>
       </Grid>
     </div>
