@@ -17,7 +17,6 @@ const Profile = () => {
     <Grid
       container
       bgcolor={"white"}
-      maxWidth={300}
       overflow={"hidden"}
       style={{
         borderRadius: "10px",
@@ -27,20 +26,27 @@ const Profile = () => {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      width={"100%"}
     >
-      <Box display={"flex"} flexDirection={"column"}>
+      <Box display={"flex"} flexDirection={"column"} width={"100%"}>
         <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="center"
+          width={"100%"}
         >
           <Avatar alt="Remy Sharp" src={face} sx={{ width: 70, height: 70 }} />
           <Box display={"flex"} alignItems={"center"}>
             <MilitaryTechIcon
               style={{ fontSize: "15px", color: profileNameColor }}
             />
-            <Typography fontSize={"12px"} ml={0.5} color={profileNameColor}>
+            <Typography
+              fontSize={"12px"}
+              ml={0.5}
+              color={profileNameColor}
+              width={"100%"}
+            >
               4.2
             </Typography>
           </Box>
@@ -49,21 +55,30 @@ const Profile = () => {
             style={{ fontSize: "16px" }}
             fontWeight={600}
             color={profileNameColor}
+            width={"100%"}
           >
             Abhishek Joshi
           </Typography>
-          <Typography variant="body1" style={{ fontSize: "11px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontSize: "11px" }}
+            width={"100%"}
+          >
             Lucknow, Uttar Pradesh
           </Typography>
-          <Typography variant="body1" style={{ fontSize: "9px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontSize: "9px" }}
+            width={"100%"}
+          >
             Associate Software Engineer
           </Typography>
         </Grid>
       </Box>
-      <Box style={{ margin: "50px auto 5px" }}>
+      <Box style={{ margin: "40px auto 5px" }} width={"100%"}>
         <Dropdown heading={"Channel"} options={topDropdownOptions} />
       </Box>
-      <Box style={{ margin: "10px auto 5px" }}>
+      <Box style={{ margin: "10px auto 5px" }} width={"100%"}>
         <Dropdown heading={"Channel"} options={topDropdownOptions} />
       </Box>
     </Grid>

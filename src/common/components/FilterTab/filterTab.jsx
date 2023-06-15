@@ -47,84 +47,87 @@ const FilterTab = () => {
       style={{
         borderRadius: "10px",
         boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)",
-      }}>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          alignItems={"flex-start"}
-          justifyItems={"flex-start"}
+        width: "100%",
+      }}
+    >
+      <Box display={"flex"} flexDirection={"column"} width={"100%"}>
+        <Typography
+          bgcolor={categoryHeaderColor}
+          style={{ padding: "5px 30px", width: "100%" }}
+          color={success}
+          fontWeight={600}
+          fontSize={15}
+          align="left"
         >
-          <Typography
-            bgcolor={categoryHeaderColor}
-            style={{ padding: "5px 30px"}}
-            color={success}
-            fontWeight={600}
-            fontSize={15}
-          >
-            Category
-          </Typography>
-          
+          Category
+        </Typography>
 
-          {renderedItems.map((item) => (
-            <Typography
-              key={item}
-              color={"black"}
-              style={{ padding: "5px 30px"}}
-              fontSize={15}
-            >
-              {item}
-            </Typography>
-          ))}
-          {!expanded && (
-            <Typography
-              style={{ padding: "5px 30px", cursor: "pointer" }}
-              color={"primary"}
-              onClick={() => setExpanded(true)}
-              fontSize={14}
-            >
-              more +
-            </Typography>
-          )}
-          {expanded && (
-            <Typography
-              style={{ padding: "5px 30px", cursor: "pointer" }}
-              color={"primary"}
-              onClick={() => setExpanded(false)}
-              fontSize={14}
-            >
-              less -
-            </Typography>
-          )}
-        </Box>
-        <Divider style={{ backgroundColor: "gray" }}></Divider>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          alignItems={"flex-start"}
-        >
+        {renderedItems.map((item) => (
           <Typography
-            bgcolor={categoryHeaderColor}
-            style={{ padding: "5px 30px" }}
-            color={success}
-            fontWeight={600}
+            key={item}
+            color={"black"}
+            style={{ padding: "5px 30px", width: "100%" }}
             fontSize={15}
+            align="left"
           >
-            Tags
+            {item}
           </Typography>
-          <Box display={"flex"} flexWrap={"wrap"} pl={"20px"}>
-            {chips.map((chip) => (
-              <Chip
-                label={chip}
-                size="small"
-                style={{
-                  color: "white",
-                  backgroundColor: chipColor,
-                  margin: "4px 6px",
-                }}
-              />
-            ))}
-          </Box>
+        ))}
+        {!expanded && (
+          <Typography
+            style={{ padding: "5px 30px", cursor: "pointer" }}
+            color={"primary"}
+            onClick={() => setExpanded(true)}
+            fontSize={14}
+            width={"100%"}
+            align="left"
+          >
+            more +
+          </Typography>
+        )}
+        {expanded && (
+          <Typography
+            style={{ padding: "5px 30px", cursor: "pointer", width: "100%" }}
+            color={"primary"}
+            onClick={() => setExpanded(false)}
+            fontSize={14}
+            align="left"
+          >
+            less -
+          </Typography>
+        )}
+      </Box>
+      <Divider style={{ backgroundColor: "gray" }}></Divider>
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        width={"100%"}
+        justifyContent={"center"}
+      >
+        <Typography
+          bgcolor={categoryHeaderColor}
+          style={{ padding: "5px 30px", width: "100%" }}
+          color={success}
+          fontWeight={600}
+          fontSize={15}
+          align="left"
+        >
+          Tags
+        </Typography>
+        <Box display={"flex"} flexWrap={"wrap"} width={"100%"} pl={"30px"}>
+          {chips.map((chip) => (
+            <Chip
+              label={chip}
+              size="small"
+              style={{
+                color: "white",
+                backgroundColor: chipColor,
+                marginRight: "10px",
+              }}
+            />
+          ))}
         </Box>
+      </Box>
     </Grid>
   );
 };

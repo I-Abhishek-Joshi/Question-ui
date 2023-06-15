@@ -34,6 +34,7 @@ const CardDetails = () => {
         borderRadius: "10px",
         boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.2)",
       }}
+      md={12}
     >
       <Grid item xs={2}>
         {/* Block 1 */}

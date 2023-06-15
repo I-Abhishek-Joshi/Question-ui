@@ -7,11 +7,16 @@ const Dropdown = (props) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <Grid display={"flex"} flexDirection={"column"} md={12}>
+    <Grid
+      display={"flex"}
+      flexDirection={"column"}
+      width={"100%"}
+      overflow={"hidden"}
+    >
       <Box
         bgcolor={primary}
-        borderRadius={"10px"}
         padding={"5px"}
+        borderRadius={"10px"}
         style={{ cursor: "pointer" }}
         display={"flex"}
         justifyContent={"space-between"}
@@ -19,21 +24,16 @@ const Dropdown = (props) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
+        width={"100%"}
       >
-        <Typography color={"white"} ml={"12px"}>
+        <Typography color={"white"} ml={"12px"} width={"100%"}>
           {props.heading}
         </Typography>
-        {isOpen && (
-          <ExpandLessIcon style={{ color: "white", marginRight: "12px" }} />
-        )}
-        {!isOpen && (
-          <ExpandMoreIcon style={{ color: "white", marginRight: "12px" }} />
-        )}
       </Box>
       {isOpen && (
-        <Box display={"flex"} flexDirection={"column"}>
+        <Box display={"flex"} flexDirection={"column"} width={"100%"}>
           {props.options.map((option) => (
-            <Box bgcolor={"white"} padding={"5px"}>
+            <Box bgcolor={"white"} padding={"5px"} width={"100%"}>
               <Typography fontSize={"15px"}>{option}</Typography>
             </Box>
           ))}
