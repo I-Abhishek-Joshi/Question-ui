@@ -16,12 +16,14 @@ function App() {
   ];
   return (
     <div className="App">
-      <Grid container>
-        <Grid item md={6}>
-          {/* <Dropdown heading={"Channel"} options={topDropdownOptions} /> */}
+      <Grid container columnSpacing={7} minHeight={"100vh"}>
+        <Grid item md={2}>
           <Profile />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={8}>
+          <CardDetailWrapper />
+        </Grid>
+        <Grid item md={2}>
           <FilterTab />
         </Grid>
       </Grid>

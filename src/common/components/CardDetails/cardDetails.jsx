@@ -26,7 +26,6 @@ const CardDetails = () => {
   return (
     <Grid
       container
-      spacing={1}
       bgcolor={"white"}
       color={"black"}
       overflow={"hidden"}
@@ -139,11 +138,11 @@ const CardDetails = () => {
 
           <Typography
             style={{
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
+              // display: "-webkit-box",
+              // WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              // overflow: "hidden",
+              // textOverflow: "ellipsis",
             }}
             mt={1}
             fontSize={"15px"}
@@ -152,11 +151,11 @@ const CardDetails = () => {
             qui sunt alias unde consectetur. Fuga vel architecto, molestiae
             exercitationem vitae similique soluta harum ea, cum, assumenda
             corrupti magnam veniam iusto. Lorem ipsum dolor, sit amet
-            consectetur adipisicing elit. Aliquam qui sunt alias unde
-            consectetur. Fuga vel architecto, molestiae exercitationem vitae
-            similique soluta harum ea, cum, assumenda corrupti magnam veniam
-            iusto. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Aliquam qui sunt alias unde consectetur. Fuga vel architecto,
+            consectetur adipisicing elit. Aliquam qui sunt alias unde 1 asda 2
+            asdasd consectetur. Fuga vel architecto, molestiae exercitationem
+            vitae similique soluta harum ea, cum, assumenda corrupti magnam
+            veniam iusto. Lorem ipsum dolor, sit amet consectetur adipisicing
+            elit. Aliquam qui sunt alias unde consectetur. Fuga vel architecto,
             molestiae exercitationem vitae similique soluta harum ea, cum,
             assumenda corrupti magnam veniam iusto.
           </Typography>

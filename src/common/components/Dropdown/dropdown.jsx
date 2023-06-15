@@ -11,11 +11,12 @@ const Dropdown = (props) => {
       display={"flex"}
       flexDirection={"column"}
       width={"100%"}
-      overflow={"hidden"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      // overflow={"hidden"}
     >
       <Box
         bgcolor={primary}
-        padding={"5px"}
         borderRadius={"10px"}
         style={{ cursor: "pointer" }}
         display={"flex"}
@@ -24,17 +25,25 @@ const Dropdown = (props) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        width={"100%"}
+        width={"90%"}
       >
-        <Typography color={"white"} ml={"12px"} width={"100%"}>
+        <Typography color={"white"} width={"100%"} padding={0.5}>
           {props.heading}
         </Typography>
+        {isOpen && (
+          <ExpandLessIcon style={{ color: "white", marginRight: "12px" }} />
+        )}
+        {!isOpen && (
+          <ExpandMoreIcon style={{ color: "white", marginRight: "12px" }} />
+        )}
       </Box>
       {isOpen && (
-        <Box display={"flex"} flexDirection={"column"} width={"100%"}>
+        <Box display={"flex"} flexDirection={"column"} width={"90%"}>
           {props.options.map((option) => (
-            <Box bgcolor={"white"} padding={"5px"} width={"100%"}>
-              <Typography fontSize={"15px"}>{option}</Typography>
+            <Box bgcolor={"white"} width={"100%"}>
+              <Typography fontSize={"15px"} padding={0.5}>
+                {option}
+              </Typography>
             </Box>
           ))}
         </Box>

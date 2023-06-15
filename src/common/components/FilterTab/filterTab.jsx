@@ -114,7 +114,7 @@ const FilterTab = () => {
         >
           Tags
         </Typography>
-        <Box display={"flex"} flexWrap={"wrap"} width={"100%"} pl={"30px"}>
+        <Box display={"flex"} flexWrap={"wrap"} width={"50%"} pl={"30px"}>
           {chips.map((chip) => (
             <Chip
               label={chip}
@@ -122,7 +122,7 @@ const FilterTab = () => {
               style={{
                 color: "white",
                 backgroundColor: chipColor,
-                marginRight: "10px",
+                margin: "10px 10px 10px 0",
               }}
             />
           ))}

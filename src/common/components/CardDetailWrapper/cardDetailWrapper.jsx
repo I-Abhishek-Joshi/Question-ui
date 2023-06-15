@@ -8,14 +8,14 @@ const CardDetailWrapper = () => {
   return (
     <Grid
       container
-      spacing={3.5}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"flex-start"}
-      md={12}
+      width={"100%"}
+      rowSpacing={3.5}
     >
-      <Grid item>
+      <Grid item width={"100%"} display={"flex"} justifyContent={"flex-start"}>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
@@ -44,13 +44,13 @@ const CardDetailWrapper = () => {
           Post to thread
         </Button>
       </Grid>
-      <Grid item md={12}>
+      <Grid item width={"100%"}>
         <CardDetails />
       </Grid>
-      <Grid item md={12}>
+      <Grid item width={"100%"}>
         <CardDetails />
       </Grid>
-      <Grid item md={12}>
+      <Grid item width={"100%"}>
         <CardDetails />
       </Grid>
     </Grid>
