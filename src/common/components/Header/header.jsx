@@ -14,8 +14,8 @@ const Header = () => {
       bgcolor={"white"}
       padding={"10px 0"}
     >
-      <Grid md={3}>
-        <img src={logo} height={"40px"}></img>
+      <Grid md={3} >
+        <img src={logo} height={"40px"} style={{cursor:"pointer"}}></img>
       </Grid>
       <Grid md={6}>
         <TextField

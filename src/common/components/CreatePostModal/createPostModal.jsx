@@ -12,7 +12,7 @@ const CreatePostModal = (props) => {
     <Grid
       width={"100vw"}
       height={"100vh"}
-      bgcolor={"rgb(255, 255, 255, 0.6)"}
+      bgcolor={"rgb(255, 255, 255, 0.8)"}
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
