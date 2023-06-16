@@ -25,9 +25,9 @@ const Dropdown = (props) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        width={"90%"}
+        width={"100%"}
       >
-        <Typography color={"white"} width={"100%"} padding={0.5}>
+        <Typography color={"white"} width={"100%"} padding={0.5} fontSize={"13px"} align="left" pl={2}>
           {props.heading}
         </Typography>
         {isOpen && (
@@ -41,7 +41,7 @@ const Dropdown = (props) => {
         <Box display={"flex"} flexDirection={"column"} width={"90%"}>
           {props.options.map((option) => (
             <Box bgcolor={"white"} width={"100%"}>
-              <Typography fontSize={"15px"} padding={0.5}>
+              <Typography fontSize={"13px"} padding={0.5} align="left" pl={2}>
                 {option}
               </Typography>
             </Box>

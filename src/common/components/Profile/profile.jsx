@@ -27,6 +27,7 @@ const Profile = () => {
       justifyContent={"center"}
       alignItems={"center"}
       width={"100%"}
+      p={2}
     >
       <Box display={"flex"} flexDirection={"column"} width={"100%"}>
         <Grid

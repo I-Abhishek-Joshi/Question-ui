@@ -35,18 +35,18 @@ const CardDetails = () => {
       }}
       md={12}
     >
-      <Grid item xs={2}>
+      <Grid item xs={1.5}>
         {/* Block 1 */}
       </Grid>
       <Grid
         item
-        xs={10}
+        xs={10.5}
         container
         justifyContent="center"
         alignItems="flex-start"
       >
         {/* Block 2 */}
-        <Grid container direction="row" flexWrap="nowrap" pl={2} pr={2}>
+        <Grid container direction="row" flexWrap="nowrap" pl={2} pr={2} mt={1}>
           <Chip
             label="Database"
             size="small"
@@ -55,6 +55,7 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
+              fontSize: "10px"
             }}
           />
           <Chip
@@ -65,6 +66,7 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
+              fontSize: "10px"
             }}
           />
           <Chip
@@ -75,13 +77,14 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
+              fontSize: "10px"
             }}
           />
         </Grid>
       </Grid>
       <Grid
         item
-        xs={2}
+        xs={1.5}
         container
         justifyContent="center"
         alignItems="flex-start"
@@ -91,9 +94,10 @@ const CardDetails = () => {
           direction="column"
           justifyContent="center"
           alignItems="center"
+          mt={3}
         >
           <Avatar alt="Remy Sharp" src={face} />
-          <Typography variant="body1" style={{ fontSize: "12px" }}>
+          <Typography variant="body1" style={{ fontSize: "10px" }}>
             Abhishek Joshi
           </Typography>
         </Grid>
@@ -101,12 +105,13 @@ const CardDetails = () => {
       </Grid>
       <Grid
         item
-        xs={10}
+        xs={10.5}
         container
         justifyContent="center"
         alignItems="flex-start"
         pl={2}
         pr={2}
+        mt={1.5}
       >
         {/* Block 4 */}
         <Grid style={{ maxHeight: "200px", overflow: "hidden" }}>
@@ -121,7 +126,7 @@ const CardDetails = () => {
                 textOverflow: "ellipsis",
               }}
               whiteSpace={"nowrap"}
-              fontSize={"15px"}
+              fontSize={"14px"}
             >
               Database design structure needs to be incorporated Database design
               structure needs to be incorporated Database design structure needs
@@ -138,14 +143,14 @@ const CardDetails = () => {
 
           <Typography
             style={{
-              // display: "-webkit-box",
-              // WebkitLineClamp: 3,
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
-              // overflow: "hidden",
-              // textOverflow: "ellipsis",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
             mt={1}
-            fontSize={"15px"}
+            fontSize={"14px"}
           >
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam
             qui sunt alias unde consectetur. Fuga vel architecto, molestiae
@@ -163,14 +168,14 @@ const CardDetails = () => {
       </Grid>
       <Grid
         item
-        xs={2}
+        xs={1.5}
         container
         justifyContent="center"
         alignItems="flex-start"
       >
         {/* Block 5 */}
       </Grid>
-      <Grid item xs={10} pl={2} pr={2}>
+      <Grid item xs={10.5} pl={2} pr={2}>
         <Box display="flex" justifyContent="space-between" pt={2} pb={2}>
           <Box display="flex" alignItems="center">
             <ArrowUpwardIcon
@@ -181,7 +186,7 @@ const CardDetails = () => {
               ml={0.5}
               mr={2}
               color={defaultColor}
-              fontSize={"12px"}
+              fontSize={"11px"}
             >
               20
             </Typography>
@@ -193,7 +198,7 @@ const CardDetails = () => {
               ml={0.5}
               mr={2}
               color={defaultColor}
-              fontSize={"12px"}
+              fontSize={"11px"}
             >
               20
             </Typography>
@@ -205,7 +210,7 @@ const CardDetails = () => {
               ml={0.5}
               mr={2}
               color={defaultColor}
-              fontSize={"12px"}
+              fontSize={"11px"}
             >
               12 Comment
             </Typography>
@@ -215,7 +220,7 @@ const CardDetails = () => {
               ml={0.5}
               mr={2}
               color={defaultColor}
-              fontSize={"12px"}
+              fontSize={"11px"}
             >
               15 Views
             </Typography>

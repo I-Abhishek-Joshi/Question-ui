@@ -56,7 +56,7 @@ const FilterTab = () => {
           style={{ padding: "5px 30px", width: "100%" }}
           color={success}
           fontWeight={600}
-          fontSize={15}
+          fontSize={"13px"}
           align="left"
         >
           Category
@@ -67,7 +67,7 @@ const FilterTab = () => {
             key={item}
             color={"black"}
             style={{ padding: "5px 30px", width: "100%" }}
-            fontSize={15}
+            fontSize={"13px"}
             align="left"
           >
             {item}
@@ -78,7 +78,7 @@ const FilterTab = () => {
             style={{ padding: "5px 30px", cursor: "pointer" }}
             color={"primary"}
             onClick={() => setExpanded(true)}
-            fontSize={14}
+            fontSize={"12px"}
             width={"100%"}
             align="left"
           >
@@ -90,7 +90,7 @@ const FilterTab = () => {
             style={{ padding: "5px 30px", cursor: "pointer", width: "100%" }}
             color={"primary"}
             onClick={() => setExpanded(false)}
-            fontSize={14}
+            fontSize={"12px"}
             align="left"
           >
             less -
@@ -109,12 +109,12 @@ const FilterTab = () => {
           style={{ padding: "5px 30px", width: "100%" }}
           color={success}
           fontWeight={600}
-          fontSize={15}
+          fontSize={"13px"}
           align="left"
         >
           Tags
         </Typography>
-        <Box display={"flex"} flexWrap={"wrap"} width={"50%"} pl={"30px"}>
+        <Box display={"flex"} flexWrap={"wrap"} width={"50%"} p={2}>
           {chips.map((chip) => (
             <Chip
               label={chip}
@@ -122,7 +122,8 @@ const FilterTab = () => {
               style={{
                 color: "white",
                 backgroundColor: chipColor,
-                margin: "10px 10px 10px 0",
+                margin: "0 10px 10px 0",
+                fontSize: "12px"
               }}
             />
           ))}

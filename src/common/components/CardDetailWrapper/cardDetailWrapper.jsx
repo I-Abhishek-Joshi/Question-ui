@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import CardDetails from "../CardDetails/cardDetails";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CreatePostModal from "../CreatePostModal/createPostModal";
 
 const CardDetailWrapper = () => {
   const primary = "#0275FF";
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Grid
       container
@@ -26,6 +28,7 @@ const CardDetailWrapper = () => {
             fontSize: "15px",
             borderRadius: "10px",
           }}
+          onClick={() => setIsOpen(true)}
         >
           New Post
         </Button>
@@ -53,6 +56,11 @@ const CardDetailWrapper = () => {
       <Grid item width={"100%"}>
         <CardDetails />
       </Grid>
+      {isOpen && (
+        <Box style={{position: "absolute", left: 0, top: 0}}>
+          <CreatePostModal closeModal={setIsOpen} />
+        </Box>
+      )}
     </Grid>
   );
 };
