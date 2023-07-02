@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardDetails from "../CardDetails/cardDetails";
 import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
+import axios from "axios";
 
 const CardDetailWrapper = () => {
+  const [questions, setQuestions] = useState([]);
+
+  const ALL_QUESTION_API = "http://localhost:8080/all/questions";
+
+  const fetchAllQuestion = async () => {
+    try {
+      const response = await axios.get(ALL_QUESTION_API);
+      setQuestions(response.data)
+      console.log("questions are", questions)
+    } catch (error) {
+      console.log("ERROR " , error)
+    }
+  };
+
+  useEffect(() => {
+    fetchAllQuestion();
+  }, []);
+
   const primary = "#0275FF";
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -47,17 +66,15 @@ const CardDetailWrapper = () => {
           Post to thread
         </Button>
       </Grid>
-      <Grid item width={"100%"}>
-        <CardDetails />
-      </Grid>
-      <Grid item width={"100%"}>
-        <CardDetails />
-      </Grid>
-      <Grid item width={"100%"}>
-        <CardDetails />
-      </Grid>
+      {
+        questions.map((question) => (
+        <Grid item width={"100%"}>
+          <CardDetails question = {question} />
+        </Grid>
+        ))
+      }
       {isOpen && (
-        <Box style={{position: "absolute", left: 0, top: 0}}>
+        <Box style={{ position: "absolute", left: 0, top: 0 }}>
           <CreatePostModal closeModal={setIsOpen} />
         </Box>
       )}

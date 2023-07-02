@@ -17,6 +17,7 @@ const LoginModal = () => {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
+      zIndex={15}
     >
       <Grid
         display={"flex"}

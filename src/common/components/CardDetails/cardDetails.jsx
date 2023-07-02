@@ -17,7 +17,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-const CardDetails = () => {
+const CardDetails = ({ question }) => {
   const chipColor = "#F0F0F0";
   const success = "#4BB543";
   const primary = "#0275FF";
@@ -55,7 +55,7 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
-              fontSize: "10px"
+              fontSize: "10px",
             }}
           />
           <Chip
@@ -66,7 +66,7 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
-              fontSize: "10px"
+              fontSize: "10px",
             }}
           />
           <Chip
@@ -77,7 +77,7 @@ const CardDetails = () => {
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
-              fontSize: "10px"
+              fontSize: "10px",
             }}
           />
         </Grid>
@@ -98,7 +98,7 @@ const CardDetails = () => {
         >
           <Avatar alt="Remy Sharp" src={face} />
           <Typography variant="body1" style={{ fontSize: "10px" }}>
-            Abhishek Joshi
+            {question.userName}
           </Typography>
         </Grid>
         {/* Block 3 */}
@@ -114,7 +114,10 @@ const CardDetails = () => {
         mt={1.5}
       >
         {/* Block 4 */}
-        <Grid style={{ maxHeight: "200px", overflow: "hidden" }}>
+        <Grid
+          style={{ maxHeight: "200px", overflow: "hidden" }}
+          width={"100%"}
+        >
           <Box display={"flex"} justifyContent={"space-between"}>
             <Typography
               variant="h6"
@@ -122,21 +125,20 @@ const CardDetails = () => {
               lineHeight={1.4}
               style={{
                 width: "60%",
+                textAlign: "left",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                cursor: "pointer"
               }}
               whiteSpace={"nowrap"}
               fontSize={"14px"}
             >
-              Database design structure needs to be incorporated Database design
-              structure needs to be incorporated Database design structure needs
-              to be incorporated Database design structure needs to be
-              incorporated
+              {question.questionTitle}
             </Typography>
             <Box display={"flex"} alignItems={"center"}>
               <AccessTimeIcon style={{ fontSize: "15px" }} />
               <Typography fontSize={"12px"} ml={0.5} fontWeight={600}>
-                11:56 am
+                {question.lastModifiedDate}
               </Typography>
             </Box>
           </Box>
@@ -148,21 +150,12 @@ const CardDetails = () => {
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              textAlign: "left"
             }}
             mt={1}
             fontSize={"14px"}
           >
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam
-            qui sunt alias unde consectetur. Fuga vel architecto, molestiae
-            exercitationem vitae similique soluta harum ea, cum, assumenda
-            corrupti magnam veniam iusto. Lorem ipsum dolor, sit amet
-            consectetur adipisicing elit. Aliquam qui sunt alias unde 1 asda 2
-            asdasd consectetur. Fuga vel architecto, molestiae exercitationem
-            vitae similique soluta harum ea, cum, assumenda corrupti magnam
-            veniam iusto. Lorem ipsum dolor, sit amet consectetur adipisicing
-            elit. Aliquam qui sunt alias unde consectetur. Fuga vel architecto,
-            molestiae exercitationem vitae similique soluta harum ea, cum,
-            assumenda corrupti magnam veniam iusto.
+            {question.questionDescription}
           </Typography>
         </Grid>
       </Grid>
@@ -188,7 +181,7 @@ const CardDetails = () => {
               color={defaultColor}
               fontSize={"11px"}
             >
-              20
+              {question.upvotes}
             </Typography>
             <ArrowDownwardIcon
               style={{ color: defaultColor, fontSize: "15px" }}
@@ -200,7 +193,7 @@ const CardDetails = () => {
               color={defaultColor}
               fontSize={"11px"}
             >
-              20
+              {question.downvotes}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center">
@@ -212,7 +205,7 @@ const CardDetails = () => {
               color={defaultColor}
               fontSize={"11px"}
             >
-              12 Comment
+              {`${question.answersCount} Comment`}
             </Typography>
             <VisibilityIcon style={{ color: defaultColor, fontSize: "15px" }} />
             <Typography
@@ -222,7 +215,7 @@ const CardDetails = () => {
               color={defaultColor}
               fontSize={"11px"}
             >
-              15 Views
+              {`${question.views} Views`}
             </Typography>
           </Box>
         </Box>
