@@ -1,18 +1,24 @@
-import { Divider, Grid, Typography } from "@mui/material";
+import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { QUESTION_API } from "../../assets/constant/constants";
 
 import UserResponse from "../../components/UserResponse/userResponse";
+import { useParams } from "react-router-dom";
 const Details = () => {
+  const { questionId } = useParams();
   const defaultColor = "#848484";
+  const primary = "#0275FF";
   const [question, setQuestion] = useState({});
-
-  const QUESTION_API =
-    "http://localhost:8080/question/16882055042203bc21046-b1f9-4c1e-bab6-6dcdec80e5df";
 
   const fetchAllQuestion = async () => {
     try {
-      const response = await axios.get(QUESTION_API);
+      const url = QUESTION_API + questionId;
+      const response = await axios.get(url, {
+        headers : {
+          Authorization : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhajJAZ21haWwuY29tIiwiaWF0IjoxNjg4NDU1NTk1LCJleHAiOjE2ODg1NDE5OTV9.CneCkU-M1djFxA-q5kyeOxOUCIG7iSrEdcvaC7oFlzk'
+        }
+      });
       setQuestion(response.data);
     } catch (error) {
       console.log("ERROR ", error);
@@ -36,14 +42,13 @@ const Details = () => {
       margin={"auto"}
       display={"flex"}
       direction={"column"}
-      padding={"10px 15px"}
-      
+      padding={"10px 24px"}
     >
-      <Grid display={"flex"} flexDirection={"column"} >
+      <Grid display={"flex"} flexDirection={"column"} margin={"10px 0"}>
         <Typography fontSize={"1.7rem"} textAlign={"left"}>
           {question.questionTitle}
         </Typography>
-        <Grid display={"flex"} >
+        <Grid display={"flex"}>
           <Typography fontSize={"14px"} color={defaultColor}>
             Asked {question.lastModifiedDate}
           </Typography>
@@ -56,30 +61,62 @@ const Details = () => {
           </Typography>
         </Grid>
       </Grid>
-        <Divider style={{ backgroundColor: "gray"}}></Divider>
+      <Divider style={{ backgroundColor: "gray" }}></Divider>
       <UserResponse
         upvotes={question.upvotes}
         downvotes={question.downvotes}
         responseData={question.questionDescription}
         lastModifiedDate={question.lastModifiedDate}
         userName={question.userName}
+        tags={question.tags}
       />
-        <Divider style={{ backgroundColor: "gray"}}></Divider>
-      <Grid>
-        <Typography textAlign={"left"} fontSize={'20px'}>
+      <Divider style={{ backgroundColor: "gray" }}></Divider>
+      <Grid margin={"10px 0"}>
+        <Typography textAlign={"left"} fontSize={"20px"}>
           {question.answersCount} Answers
         </Typography>
       </Grid>
-      {question.answers.map((answer) => {
+      {question.answers?.map((answer) => {
+
+        return (<>
         <UserResponse
           upvotes={answer.upvotes}
           downvotes={answer.downvotes}
           responseData={answer.answer}
           lastModifiedDate={answer.lastModifiedDate}
           userName={question.userName}
-        />;
-          <Divider style={{ backgroundColor: "gray"}}></Divider>
+        />
+        <Divider style={{ backgroundColor: "gray" }}></Divider></>)
+        
       })}
+      {question.answers?.length === 0 && (
+        <Divider style={{ backgroundColor: "gray" }}></Divider>
+      )}
+      <Grid margin={"10px 0"}>
+        <Typography textAlign={"left"} fontSize={"20px"}>
+          Your Answers
+        </Typography>
+      </Grid>
+      <Grid width={"100%"} margin={"5px 0"}>
+        <TextField
+          placeholder="Enter text here"
+          multiline
+          rows={6}
+          variant="outlined"
+          fullWidth
+        />
+      </Grid>
+      <Grid display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+        <Button
+          style={{
+            backgroundColor: primary,
+            color: "white",
+            width: '20%',
+          }}
+        >
+          Post Answer
+        </Button>
+      </Grid>
     </Grid>
   );
 };

@@ -4,19 +4,26 @@ import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
 import axios from "axios";
+import {
+  ALL_QUESTIONS_API,
+} from "../../assets/constant/constants";
 
 const CardDetailWrapper = () => {
   const [questions, setQuestions] = useState([]);
 
-  const ALL_QUESTION_API = "http://localhost:8080/all/questions";
-
   const fetchAllQuestion = async () => {
     try {
-      const response = await axios.get(ALL_QUESTION_API);
-      setQuestions(response.data)
-      console.log("questions are", questions)
+      const response = await axios.get(ALL_QUESTIONS_API, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhajJAZ21haWwuY29tIiwiaWF0IjoxNjg4NDU1NTk1LCJleHAiOjE2ODg1NDE5OTV9.CneCkU-M1djFxA-q5kyeOxOUCIG7iSrEdcvaC7oFlzk",
+          joshi: "joshi",
+        },
+      });
+      setQuestions(response.data);
+      console.log("questions are", questions);
     } catch (error) {
-      console.log("ERROR " , error)
+      console.log("ERROR ", error);
     }
   };
 
@@ -66,13 +73,11 @@ const CardDetailWrapper = () => {
           Post to thread
         </Button>
       </Grid>
-      {
-        questions.map((question) => (
+      {questions.map((question) => (
         <Grid item width={"100%"}>
-          <CardDetails question = {question} />
+          <CardDetails question={question} />
         </Grid>
-        ))
-      }
+      ))}
       {isOpen && (
         <Box style={{ position: "absolute", left: 0, top: 0 }}>
           <CreatePostModal closeModal={setIsOpen} />

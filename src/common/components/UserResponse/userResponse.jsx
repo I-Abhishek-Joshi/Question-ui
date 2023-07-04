@@ -1,7 +1,8 @@
 import React from "react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Grid, Typography } from "@mui/material";
+import { Chip, Grid, Typography } from "@mui/material";
+import { Tag } from "@mui/icons-material";
 
 const UserResponse = ({
   upvotes,
@@ -9,13 +10,13 @@ const UserResponse = ({
   responseData,
   lastModifiedDate,
   userName,
+  tags
 }) => {
-  const defaultColor = "#848484";
   const userColor = "#D9E9F7";
   const primary = "#0275FF";
   return (
-    <Grid display={"flex"} >
-      <Grid justifyContent={'center'} display={'flex'} padding={'10px'} marginLeft={'16px'}>
+    <Grid display={"flex"}>
+      <Grid justifyContent={'center'} display={'flex'} margin={'15px 0'}>
         <Grid display={"flex"} flexDirection={"column"} alignItems={'center'} style={{width: 'fit-content'}}>
           <ArrowDropUpIcon
             style={{ border: "0.5px solid", borderRadius: "50%", fontSize: '30px', cursor: 'pointer' }}
@@ -26,8 +27,22 @@ const UserResponse = ({
           />
         </Grid>
       </Grid>
-      <Grid padding={'10px'}>
+      <Grid padding={'10px'} flexGrow={1}>
         <Typography textAlign={'left'} >{responseData}</Typography>
+        <Grid mt={'10px'} display={'flex'} justifyContent={'flex-start'} >
+            {tags?.map((tag) => (
+                <Chip
+                label={tag}
+                size="small"
+                style={{
+                  padding: "0 20px",
+                  margin: "5px",
+                  fontSize: "12px",
+                  backgroundColor: userColor
+                }}
+              />
+            ))}
+        </Grid>
         <Grid display={"flex"} justifyContent={"flex-end"}>
           <Grid
             display={"flex"}

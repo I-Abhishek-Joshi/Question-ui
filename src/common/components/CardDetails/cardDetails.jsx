@@ -16,6 +16,7 @@ import avatar from "../../assets/images/avatar.jpg";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Link } from "react-router-dom";
 
 const CardDetails = ({ question }) => {
   const chipColor = "#F0F0F0";
@@ -114,27 +115,28 @@ const CardDetails = ({ question }) => {
         mt={1.5}
       >
         {/* Block 4 */}
-        <Grid
-          style={{ maxHeight: "200px", overflow: "hidden" }}
-          width={"100%"}
-        >
-          <Box display={"flex"} justifyContent={"space-between"}>
-            <Typography
-              variant="h6"
-              fontWeight={700}
-              lineHeight={1.4}
-              style={{
-                width: "60%",
-                textAlign: "left",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                cursor: "pointer"
-              }}
-              whiteSpace={"nowrap"}
-              fontSize={"14px"}
+        <Grid style={{ maxHeight: "200px", overflow: "hidden" }} width={"100%"}>
+          <Box display={"flex"} justifyContent={"space-between"} >
+            <Link
+              to={`/${question.questionId}`}
+              style={{ textDecoration: "none", color: "inherit", width: '80%' }}
             >
-              {question.questionTitle}
-            </Typography>
+              <Typography
+                variant="h6"
+                fontWeight={700}
+                lineHeight={1.4}
+                style={{
+                  textAlign: "left",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  cursor: "pointer",
+                }}
+                whiteSpace={"nowrap"}
+                fontSize={"14px"}
+              >
+                {question.questionTitle} 
+              </Typography>
+            </Link>
             <Box display={"flex"} alignItems={"center"}>
               <AccessTimeIcon style={{ fontSize: "15px" }} />
               <Typography fontSize={"12px"} ml={0.5} fontWeight={600}>
@@ -150,7 +152,7 @@ const CardDetails = ({ question }) => {
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              textAlign: "left"
+              textAlign: "left",
             }}
             mt={1}
             fontSize={"14px"}

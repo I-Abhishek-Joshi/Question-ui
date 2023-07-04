@@ -11,13 +11,17 @@ const Header = () => {
       alignContent={"center"}
       display={"flex"}
       alignItems={"center"}
+      justifyContent={'center'}
       bgcolor={"white"}
       padding={"10px 0"}
+      style={{ position: 'sticky', top: 0, width: '100%', zIndex: 10 }}
+      container
+      marginBottom={'32px'}
     >
       <Grid md={3} >
         <img src={logo} height={"40px"} style={{cursor:"pointer"}}></img>
       </Grid>
-      <Grid md={6}>
+      <Grid md={6} >
         <TextField
         placeholder="Search Question Bank"
           fullWidth
