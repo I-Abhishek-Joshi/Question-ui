@@ -1,7 +1,7 @@
 import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { QUESTION_API } from "../../assets/constant/constants";
+import { QUESTION_API, getTokenCookie } from "../../assets/constant/constants";
 
 import UserResponse from "../../components/UserResponse/userResponse";
 import { useParams } from "react-router-dom";
@@ -16,7 +16,7 @@ const Details = () => {
       const url = QUESTION_API + questionId;
       const response = await axios.get(url, {
         headers : {
-          Authorization : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhajJAZ21haWwuY29tIiwiaWF0IjoxNjg4NDU1NTk1LCJleHAiOjE2ODg1NDE5OTV9.CneCkU-M1djFxA-q5kyeOxOUCIG7iSrEdcvaC7oFlzk'
+          Authorization : `Bearer ${getTokenCookie()}`
         }
       });
       setQuestion(response.data);
@@ -69,6 +69,7 @@ const Details = () => {
         lastModifiedDate={question.lastModifiedDate}
         userName={question.userName}
         tags={question.tags}
+        type={'question'}
       />
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <Grid margin={"10px 0"}>
@@ -85,6 +86,7 @@ const Details = () => {
           responseData={answer.answer}
           lastModifiedDate={answer.lastModifiedDate}
           userName={question.userName}
+          type={'answer'}
         />
         <Divider style={{ backgroundColor: "gray" }}></Divider></>)
         

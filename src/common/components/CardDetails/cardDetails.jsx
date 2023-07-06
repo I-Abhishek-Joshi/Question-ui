@@ -5,18 +5,19 @@ import {
   Grid,
   Avatar,
   Chip,
-  Item,
-  Container,
   Box,
 } from "@mui/material";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import face from "../../assets/images/face.jpg";
-import avatar from "../../assets/images/avatar.jpg";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { isUserAuthenticated } from "../../utils/utils";
+import { useDispatch } from "react-redux";
+import { currentLocation, openLoginModal } from "../../actions/actions";
+import '../../../App.css'
 
 const CardDetails = ({ question }) => {
   const chipColor = "#F0F0F0";
@@ -24,6 +25,20 @@ const CardDetails = ({ question }) => {
   const primary = "#0275FF";
   const orange = "#ff781f";
   const defaultColor = "#848484";
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleQuestionTitleClick = () => {
+    if(isUserAuthenticated()) {
+      navigate(`/${question.questionId}`)
+    } else{
+      dispatch(currentLocation(`${question.questionId}`))
+      dispatch(openLoginModal())
+      document.body.classList.add('bodyNoScroll')
+    }
+  }
+
   return (
     <Grid
       container
@@ -117,10 +132,6 @@ const CardDetails = ({ question }) => {
         {/* Block 4 */}
         <Grid style={{ maxHeight: "200px", overflow: "hidden" }} width={"100%"}>
           <Box display={"flex"} justifyContent={"space-between"} >
-            <Link
-              to={`/${question.questionId}`}
-              style={{ textDecoration: "none", color: "inherit", width: '80%' }}
-            >
               <Typography
                 variant="h6"
                 fontWeight={700}
@@ -130,13 +141,14 @@ const CardDetails = ({ question }) => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   cursor: "pointer",
+                  maxWidth: '80%',
                 }}
                 whiteSpace={"nowrap"}
                 fontSize={"14px"}
+                onClick={ handleQuestionTitleClick }
               >
                 {question.questionTitle} 
               </Typography>
-            </Link>
             <Box display={"flex"} alignItems={"center"}>
               <AccessTimeIcon style={{ fontSize: "15px" }} />
               <Typography fontSize={"12px"} ml={0.5} fontWeight={600}>

@@ -2,6 +2,7 @@ import { Box, Grid, TextField, Button, IconButton } from "@mui/material";
 import React from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
+import { isUserAuthenticated } from "../../utils/utils";
 
 const Header = () => {
     const primary = "#0175FF"
@@ -42,9 +43,12 @@ const Header = () => {
           }}
         />
       </Grid>
-      <Grid md={3}>
+      {!isUserAuthenticated() && (<Grid md={3}>
         <Button variant="contained" height={"40px"} style={{backgroundColor: primary}}>Login/Register</Button>
-      </Grid>
+      </Grid>)}
+      {isUserAuthenticated() && (<Grid md={3}>
+        <Button variant="contained" height={"40px"} style={{backgroundColor: primary}}>Logout</Button>
+      </Grid>)}
     </Grid>
   );
 };

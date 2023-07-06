@@ -3,3 +3,7 @@
   /* background: linear-gradient(45deg, yellow, lightblue, pink); */
   background: linear-gradient(135deg, #BCCEF3, #FDE590, #F27BB7);
 }
+
+.bodyNoScroll {
+  overflow: hidden;
+}

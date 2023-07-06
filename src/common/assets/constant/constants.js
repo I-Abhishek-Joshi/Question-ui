@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 export const ALL_QUESTIONS_API = "http://localhost:8080/all/questions";
 export const QUESTION_API = "http://localhost:8080/question/";
-
+export const LOGIN_API = "http://localhost:8080/api/v1/auth/authenticate"
 export const setTokenCookie = (token) => {
   Cookies.set("jwtToken", token);
 };

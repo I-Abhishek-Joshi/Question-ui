@@ -10,7 +10,8 @@ const UserResponse = ({
   responseData,
   lastModifiedDate,
   userName,
-  tags
+  tags,
+  type
 }) => {
   const userColor = "#D9E9F7";
   const primary = "#0275FF";
@@ -52,7 +53,7 @@ const UserResponse = ({
             style={{ width: "fit-content", borderRadius: "5px" }}
             p={0.8}
           >
-            <Typography fontSize={"12px"}>Asked {lastModifiedDate}</Typography>
+            <Typography fontSize={"12px"}>{type === 'question'? "Asked" : "Answered"} {lastModifiedDate}</Typography>
             <Typography fontSize={"12px"} color={primary}>
               {userName}
             </Typography>

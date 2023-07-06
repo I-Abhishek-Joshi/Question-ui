@@ -4,6 +4,7 @@ import Profile from "../../components/Profile/profile";
 import CardDetailWrapper from "../../components/CardDetailWrapper/cardDetailWrapper";
 import FilterTab from "../../components/FilterTab/filterTab";
 
+
 const Home = () => {
     return (
         <Grid container columnSpacing={6} padding={"0 20px"}>
