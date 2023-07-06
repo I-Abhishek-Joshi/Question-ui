@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import { closeLoginModal } from "../../actions/actions";
 import axios from "axios";
 import { LOGIN_API, setTokenCookie } from "../../assets/constant/constants";
 import { useNavigate } from "react-router-dom";
+import LoginInputs from "../LoginInputs/loginInputs";
 
 const LoginModal = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ const LoginModal = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const navigate = useNavigate();
-  const currentLocation = useSelector((state) => state.locationReducer.currentLocation)
+  const currentLocation = useSelector(
+    (state) => state.locationReducer.currentLocation
+  );
 
   const disableLoginButton = () => {
     return email.length === 0 || password.length === 0;
@@ -58,8 +61,8 @@ const LoginModal = () => {
       .then((data) => {
         setTokenCookie(data.token);
         dispatch(closeLoginModal());
-        navigate(currentLocation)
-        console.log('location is  : ', currentLocation)
+        navigate(currentLocation);
+        console.log("location is  : ", currentLocation);
         document.body.classList.remove("bodyNoScroll");
       })
       .catch((error) => {
@@ -121,12 +124,12 @@ const LoginModal = () => {
             />
           )}
         </Grid>
-        <Grid width={"100%"} padding={"30px"}>
-          <Grid>
-            <Typography fontSize={"30px"} color={textColor}>
-              Member Login
-            </Typography>
-          </Grid>
+        <Grid marginTop={"30px"}>
+          <Typography fontSize={"30px"} color={textColor}>
+            Member Login
+          </Typography>
+        </Grid>
+        {/* <Grid width={"100%"} padding={"0 30px"}>
           <Grid margin={"15px 0"}>
             <TextField
               fullWidth
@@ -194,7 +197,8 @@ const LoginModal = () => {
               Forgot Password?
             </Typography>
           </Grid>
-        )}
+        )} */}
+        <LoginInputs/>
       </Grid>
     </Grid>
   );

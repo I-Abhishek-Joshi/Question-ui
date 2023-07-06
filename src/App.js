@@ -3,27 +3,33 @@ import "./App.css";
 import Header from "./common/components/Header/header";
 import Footer from "./common/components/Footer/footer";
 import Home from "./common/Pages/Home/home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Details from "./common/Pages/Details/details";
 import LoginModal from "./common/components/LoginModal/loginModal";
 import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
+import Login from "./common/Pages/Login/login";
+import Register from "./common/Pages/Register/register";
 
 function App() {
   const isLoginModalOpen = useSelector((state) => state.toggleLoginModalReducer.isLoginModalOpen)
-  
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
   return (
-    <div className="App">
+    <div className={`App ${isAuthPage ? "auth" : "app"}`}>
       {
           isLoginModalOpen && (<Grid position={'fixed'} zIndex={'999'} width={'100%'} height={'100%'}>
           <LoginModal />
         </Grid>)
       }
-      <Header />
+      {
+        !isAuthPage && (<Header/>)
+      }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:questionId" element={<Details />} />
-        <Route path="/login" element={<LoginModal />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
 
       <Footer />
