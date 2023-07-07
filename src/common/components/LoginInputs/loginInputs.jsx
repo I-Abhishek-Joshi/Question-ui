@@ -54,7 +54,7 @@ const LoginInputs = () => {
 
     callLoginApi()
       .then((data) => {
-        setTokenCookie(data.token);
+        setTokenCookie(data);
         dispatch(closeLoginModal());
         navigate(currentLocation);
         console.log("location is  : ", currentLocation);

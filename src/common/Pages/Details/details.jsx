@@ -1,7 +1,12 @@
 import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { QUESTION_API, getTokenCookie } from "../../assets/constant/constants";
+import {
+  ANSWER_API,
+  DELETE_ANSWER_API,
+  QUESTION_API,
+  getTokenCookie,
+} from "../../assets/constant/constants";
 
 import UserResponse from "../../components/UserResponse/userResponse";
 import { useParams } from "react-router-dom";
@@ -9,15 +14,22 @@ const Details = () => {
   const { questionId } = useParams();
   const defaultColor = "#848484";
   const primary = "#0275FF";
-  const [question, setQuestion] = useState({});
+  const primaryDisable = "#B2CFFF";
 
-  const fetchAllQuestion = async () => {
+  const [question, setQuestion] = useState({});
+  const [answer, setAnswer] = useState("");
+  const [isPostingAnswer, setIsPostingAnswer] = useState(false);
+
+  const refresh = () => {
+    window.location.reload();
+  };
+  const fetchQuestion = async () => {
     try {
       const url = QUESTION_API + questionId;
       const response = await axios.get(url, {
-        headers : {
-          Authorization : `Bearer ${getTokenCookie()}`
-        }
+        headers: {
+          Authorization: `Bearer ${getTokenCookie()}`,
+        },
       });
       setQuestion(response.data);
     } catch (error) {
@@ -25,8 +37,43 @@ const Details = () => {
     }
   };
 
+  const postAnswerApi = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          ANSWER_API,
+          {
+            questionId: question.questionId,
+            answer: answer.trim().replace(/\n/g, "%n%"),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${getTokenCookie()}`,
+            },
+          }
+        )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  const handlePostAnswer = () => {
+    setIsPostingAnswer(true);
+    postAnswerApi()
+      .then((data) => {
+        refresh();
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   useEffect(() => {
-    fetchAllQuestion();
+    fetchQuestion();
   }, []);
   return (
     <Grid
@@ -69,7 +116,8 @@ const Details = () => {
         lastModifiedDate={question.lastModifiedDate}
         userName={question.userName}
         tags={question.tags}
-        type={'question'}
+        type={"question"}
+        refresh={refresh}
       />
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <Grid margin={"10px 0"}>
@@ -78,18 +126,24 @@ const Details = () => {
         </Typography>
       </Grid>
       {question.answers?.map((answer) => {
-
-        return (<>
-        <UserResponse
-          upvotes={answer.upvotes}
-          downvotes={answer.downvotes}
-          responseData={answer.answer}
-          lastModifiedDate={answer.lastModifiedDate}
-          userName={question.userName}
-          type={'answer'}
-        />
-        <Divider style={{ backgroundColor: "gray" }}></Divider></>)
-        
+        return (
+          <>
+            <UserResponse
+              upvotes={answer.upvotes}
+              downvotes={answer.downvotes}
+              responseData={answer.answer.replace(/%n%/g, "\n")}
+              lastModifiedDate={answer.lastModifiedDate}
+              userName={answer.userName}
+              type={"answer"}
+              userId={answer.userId}
+              refresh = {refresh}
+              answerId = {answer.answerId}
+              questionId = {answer.questionId}
+              
+            />
+            <Divider style={{ backgroundColor: "gray" }}></Divider>
+          </>
+        );
       })}
       {question.answers?.length === 0 && (
         <Divider style={{ backgroundColor: "gray" }}></Divider>
@@ -106,15 +160,28 @@ const Details = () => {
           rows={6}
           variant="outlined"
           fullWidth
+          value={answer}
+          style={{whiteSpace: "pre-wrap", overflowWrap: "break-word"}}
+          onChange={(e) => setAnswer(e.target.value)}
+          disabled={isPostingAnswer}
         />
       </Grid>
-      <Grid display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+      <Grid
+        display={"flex"}
+        justifyContent={"flex-start"}
+        alignItems={"center"}
+      >
         <Button
           style={{
-            backgroundColor: primary,
+            backgroundColor:
+              answer.trim().length === 0 || isPostingAnswer
+                ? primaryDisable
+                : primary,
             color: "white",
-            width: '20%',
+            width: "20%",
           }}
+          onClick={handlePostAnswer}
+          disabled={answer.trim().length === 0}
         >
           Post Answer
         </Button>

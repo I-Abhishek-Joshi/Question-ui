@@ -6,6 +6,7 @@ import { isUserAuthenticated } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { currentLocation } from "../../actions/actions";
+import { deleteTokenCookie } from "../../assets/constant/constants";
 
 const Header = () => {
   const primary = "#0175FF";
@@ -16,6 +17,12 @@ const Header = () => {
     dispatch(currentLocation("/"))
     navigate("/login")
   };
+
+  const handleLogout = () => {
+    deleteTokenCookie()
+    dispatch(currentLocation("/"))
+    navigate("/login")
+  }
   return (
     <Grid
       width={"100%"}
@@ -30,7 +37,9 @@ const Header = () => {
       marginBottom={"32px"}
     >
       <Grid md={3}>
+        <Link to={"/"}>
         <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
+        </Link>
       </Grid>
       <Grid md={6}>
         <TextField
@@ -78,6 +87,7 @@ const Header = () => {
             variant="contained"
             height={"40px"}
             style={{ backgroundColor: primary }}
+            onClick={ handleLogout }
           >
             Logout
           </Button>

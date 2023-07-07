@@ -1,28 +1,37 @@
 import React from "react";
-import { Box, Container, Grid, Link, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import semiLogo from "../../assets/images/semiLogo.png";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <Box bgcolor="#001f3f" color="#fff" mt={'80px'} p={3}>
+    <Box bgcolor="#001f3f" color="#fff" mt={"80px"} p={3}>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <Grid display={"flex"} marginLeft={"10px"} justifyContent={'center'}>
+            <Link to={"/"} style={{textDecoration: 'none'}}>
+            <Grid
+              display={"flex"}
+              marginLeft={"10px"}
+              justifyContent={"center"}
+            >
               <img
                 src={semiLogo}
                 height={"40px"}
                 style={{ cursor: "pointer" }}
               />
+
               <Typography
                 variant="h6"
                 fontWeight="bold"
                 gutterBottom
                 style={{ cursor: "pointer" }}
-                marginLeft={'12px'}
+                marginLeft={"12px"}
+                color={'white'}
               >
                 Question Bank
               </Typography>
             </Grid>
+            </Link>
 
             <Typography
               variant="body2"
@@ -172,7 +181,7 @@ const Footer = () => {
             {/* Add more links as needed */}
           </Grid>
         </Grid>
-        <Box mt={3} textAlign="center" marginTop={'50px'}>
+        <Box mt={3} textAlign="center" marginTop={"50px"}>
           <Typography variant="body2">
             &copy; {new Date().getFullYear()} Joshi Inc.
           </Typography>

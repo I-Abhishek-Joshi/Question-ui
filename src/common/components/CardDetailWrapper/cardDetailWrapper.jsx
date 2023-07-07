@@ -13,13 +13,7 @@ const CardDetailWrapper = () => {
 
   const fetchAllQuestion = async () => {
     try {
-      const response = await axios.get(ALL_QUESTIONS_API, {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhajJAZ21haWwuY29tIiwiaWF0IjoxNjg4NjM4Mzg4LCJleHAiOjE2ODg3MjQ3ODh9.PjysNlKxnPWLn4o0yGmd7yO9skVbRVcKkpU8Y3TYyJM",
-          joshi: "joshi",
-        },
-      });
+      const response = await axios.get(ALL_QUESTIONS_API);
       setQuestions(response.data);
     } catch (error) {
       console.log("ERROR ", error);

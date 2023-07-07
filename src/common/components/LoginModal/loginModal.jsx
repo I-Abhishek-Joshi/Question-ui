@@ -59,7 +59,7 @@ const LoginModal = () => {
 
     callLoginApi()
       .then((data) => {
-        setTokenCookie(data.token);
+        setTokenCookie(data);
         dispatch(closeLoginModal());
         navigate(currentLocation);
         console.log("location is  : ", currentLocation);
@@ -129,75 +129,6 @@ const LoginModal = () => {
             Member Login
           </Typography>
         </Grid>
-        {/* <Grid width={"100%"} padding={"0 30px"}>
-          <Grid margin={"15px 0"}>
-            <TextField
-              fullWidth
-              placeholder="Email"
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: textColor,
-                },
-              }}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              disabled={isLoggingIn}
-            />
-          </Grid>
-          <Grid margin={"15px 0"}>
-            <TextField
-              fullWidth
-              placeholder="Password"
-              type="password"
-              sx={{
-                "& .MuiInputBase-root": {
-                  color: textColor,
-                },
-              }}
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              disabled={isLoggingIn}
-            />
-          </Grid>
-          <Box margin={"15px 0"}>
-            <Button
-              style={{
-                backgroundColor: isLoggingIn
-                  ? primaryDisable
-                  : disableLoginButton()
-                  ? primaryDisable
-                  : primary,
-                width: "100%",
-                color: "white",
-                fontWeight: "600",
-              }}
-              disabled={disableLoginButton()}
-              onClick={handleLoginCLick}
-              startIcon={
-                isLoggingIn ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : null
-              }
-            >
-              {isLoggingIn ? "Logging In" : "Login"}
-            </Button>
-          </Box>
-        </Grid>
-        {!isLoggingIn && (
-          <Grid padding={"0 0 15px"}>
-            <Typography
-              color={textColor}
-              sx={{
-                "&:hover": {
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                },
-              }}
-            >
-              Forgot Password?
-            </Typography>
-          </Grid>
-        )} */}
         <LoginInputs/>
       </Grid>
     </Grid>
