@@ -7,8 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "../../../App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLoginModal } from "../../actions/actions";
@@ -27,9 +25,7 @@ const LoginInputs = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const navigate = useNavigate();
-  const currentLocation = useSelector(
-    (state) => state.locationReducer.currentLocation
-  );
+  const currentLocation = useSelector((state) => state.locationReducer.currentLocation) || "/";
 
   const disableLoginButton = () => {
     return email.length === 0 || password.length === 0;
@@ -78,7 +74,7 @@ const LoginInputs = () => {
         <Grid margin={"15px 0"}>
           <TextField
             fullWidth
-            placeholder="Email"
+            placeholder="Email Address"
             sx={{
               "& .MuiInputBase-root": {
                 color: textColor,

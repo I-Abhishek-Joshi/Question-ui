@@ -3,10 +3,19 @@ import React from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import { isUserAuthenticated } from "../../utils/utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { currentLocation } from "../../actions/actions";
 
 const Header = () => {
   const primary = "#0175FF";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOnLoginRegisterClick = () => {
+    dispatch(currentLocation("/"))
+    navigate("/login")
+  };
   return (
     <Grid
       width={"100%"}
@@ -53,15 +62,14 @@ const Header = () => {
       </Grid>
       {!isUserAuthenticated() && (
         <Grid md={3}>
-          <Link to={"/login"}>
-            <Button
-              variant="contained"
-              height={"40px"}
-              style={{ backgroundColor: primary }}
-            >
-              Login/Register
-            </Button>
-          </Link>
+          <Button
+            variant="contained"
+            height={"40px"}
+            style={{ backgroundColor: primary }}
+            onClick={handleOnLoginRegisterClick}
+          >
+            Login/Register
+          </Button>
         </Grid>
       )}
       {isUserAuthenticated() && (
