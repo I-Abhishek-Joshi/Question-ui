@@ -4,11 +4,16 @@ import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
 import axios from "axios";
+import '../../../App.css'
 import {
   ALL_QUESTIONS_API,
 } from "../../assets/constant/constants";
+import { isUserAuthenticated } from "../../utils/utils";
+import { useDispatch } from "react-redux";
+import { currentLocation, openLoginModal } from "../../actions/actions";
 
 const CardDetailWrapper = () => {
+  const dispatch = useDispatch()
   const [questions, setQuestions] = useState([]);
 
   const fetchAllQuestion = async () => {
@@ -20,12 +25,26 @@ const CardDetailWrapper = () => {
     }
   };
 
+  const toggleScroll = () => {
+    document.body.classList.toggle('bodyNoScroll')
+  }
+
   useEffect(() => {
     fetchAllQuestion();
   }, []);
 
   const primary = "#0275FF";
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleCreatePost = () => {
+    if(isUserAuthenticated()) {
+      toggleScroll()
+      setIsOpen(true)
+    } else {
+      dispatch(currentLocation("/"))
+      dispatch(openLoginModal())
+    }
+  }
   return (
     <Grid
       container
@@ -47,7 +66,7 @@ const CardDetailWrapper = () => {
             fontSize: "15px",
             borderRadius: "10px",
           }}
-          onClick={() => setIsOpen(true)}
+          onClick={ handleCreatePost } 
         >
           New Post
         </Button>
@@ -72,8 +91,8 @@ const CardDetailWrapper = () => {
         </Grid>
       ))}
       {isOpen && (
-        <Box style={{ position: "absolute", left: 0, top: 0 }}>
-          <CreatePostModal closeModal={setIsOpen} />
+        <Box style={{ position: "absolute", left: 0, top: 0 }} zIndex={20} width={"100vw"} height={"100vh"}>
+          <CreatePostModal closeModal={setIsOpen} toggleScroll = {toggleScroll}/>
         </Box>
       )}
     </Grid>

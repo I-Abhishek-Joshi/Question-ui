@@ -3,29 +3,86 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import LinkIcon from "@mui/icons-material/Link";
+import axios from "axios";
+import {
+  ADD_QUESTION_API,
+  getTokenCookie,
+} from "../../assets/constant/constants";
 
 const CreatePostModal = (props) => {
   const name = "Abhishek";
   const textPlaceHolder = `Whats in your mind, ${name}`;
   const primary = "#0275FF";
+  const primaryDisable = "#B2CFFF";
+
+  const [questionTitle, setQuestionTitle] = useState("");
+  const [questionDesc, setQuestionDesc] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
+
+  const QuestionPostApi = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          ADD_QUESTION_API,
+          {
+            questionTitle: questionTitle.trim(),
+            questionDescription: questionDesc.trim().replace(/\n/g, "%n%"),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${getTokenCookie()}`,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response);
+          } else {
+            reject(response);
+          }
+        })
+        .catch((error) => reject(error));
+    });
+  };
+
+  const refresh = () => {
+    window.location.reload();
+  };
+
+  const disablePosting = () => {
+    return (
+      questionTitle.trim().length === 0 || questionDesc.trim().length === 0
+    );
+  };
+  const handleQuestionPostClick = () => {
+    setIsPosting(true);
+    QuestionPostApi()
+      .then((data) => {
+        refresh();
+      })
+      .catch((error) => {
+        console.log("error : ", error);
+      });
+  };
   return (
     <Grid
-      width={"100vw"}
-      height={"100vh"}
-      bgcolor={"rgb(255, 255, 255, 0.8)"}
+      width={"100%"}
+      height={"100%"}
+      bgcolor={"rgb(255, 255, 255, 0.9)"}
       display={"flex"}
       justifyContent={"center"}
-      alignItems={"center"}
-      zIndex={15}
+      zIndex={20}
     >
       <Grid
         display={"flex"}
         flexDirection={"column"}
         width={"45%"}
-        bgcolor={"white"}
+        height={"fit-content"}
         borderRadius={"10px"}
         overflow={"hidden"}
         boxShadow={"0px 2px 6px rgba(0, 0, 0, 0.5)"}
+        mt={"8rem"}
+        bgcolor={"white"}
       >
         <Grid
           width={"100%"}
@@ -49,7 +106,10 @@ const CreatePostModal = (props) => {
               cursor: "pointer",
               fontSize: "30px",
             }}
-            onClick={() => props.closeModal(false)}
+            onClick={() => {
+              props.toggleScroll();
+              props.closeModal(false);
+            }}
           />
         </Grid>
         <Grid padding={"10px 20px 20px"}>
@@ -57,9 +117,26 @@ const CreatePostModal = (props) => {
             <TextField
               placeholder={textPlaceHolder}
               multiline
-              rows={6}
+              rows={1}
               variant="outlined"
               fullWidth
+              helperText={
+                "Be specific and imagine you’re asking a question to another person."
+              }
+              size="small"
+              value={questionTitle}
+              onChange={(e) => setQuestionTitle(e.target.value)}
+            />
+          </Grid>
+          <Grid width={"100%"} mt={2}>
+            <TextField
+              placeholder="What are the details of your problem"
+              multiline
+              rows={5}
+              variant="outlined"
+              fullWidth
+              value={questionDesc}
+              onChange={(e) => setQuestionDesc(e.target.value)}
             />
           </Grid>
           <Grid
@@ -97,11 +174,15 @@ const CreatePostModal = (props) => {
           <Grid>
             <Button
               style={{
-                backgroundColor: primary,
+                backgroundColor: "red",
+                backgroundColor:
+                  disablePosting() || isPosting ? primaryDisable : primary,
                 width: "100%",
                 color: "white",
                 fontWeight: "600",
               }}
+              disabled={disablePosting()}
+              onClick={handleQuestionPostClick}
             >
               Post
             </Button>

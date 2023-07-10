@@ -168,8 +168,9 @@ const CardDetails = ({ question }) => {
             }}
             mt={1}
             fontSize={"14px"}
+            whiteSpace={"pre-line"}
           >
-            {question.questionDescription}
+            {question.questionDescription.replace(/%n%/g, "\n")}
           </Typography>
         </Grid>
       </Grid>

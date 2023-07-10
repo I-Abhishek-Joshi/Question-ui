@@ -1,5 +1,5 @@
-import { Box, Grid, TextField, Button, IconButton } from "@mui/material";
-import React from "react";
+import { Box, Grid, TextField, Button, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import { isUserAuthenticated } from "../../utils/utils";
@@ -10,6 +10,9 @@ import { deleteTokenCookie } from "../../assets/constant/constants";
 
 const Header = () => {
   const primary = "#0175FF";
+
+  const [searchText, setSearchText] = useState("")
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,6 +26,15 @@ const Header = () => {
     dispatch(currentLocation("/"))
     navigate("/login")
   }
+
+  const handleSearch = () => {
+    
+  }
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && searchText.trim() !== "") {
+      handleSearch()
+    }
+  };
   return (
     <Grid
       width={"100%"}
@@ -62,11 +74,15 @@ const Header = () => {
               <Button
                 variant="contained"
                 style={{ height: "30px", backgroundColor: primary }}
+                onClick={ handleSearch }
               >
                 Search
               </Button>
             ),
           }}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={handleKeyPress} 
         />
       </Grid>
       {!isUserAuthenticated() && (

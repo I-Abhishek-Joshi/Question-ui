@@ -112,7 +112,7 @@ const Details = () => {
       <UserResponse
         upvotes={question.upvotes}
         downvotes={question.downvotes}
-        responseData={question.questionDescription}
+        responseData={question?.questionDescription?.replace(/%n%/g, "\n")}
         lastModifiedDate={question.lastModifiedDate}
         userName={question.userName}
         tags={question.tags}

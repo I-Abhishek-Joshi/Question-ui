@@ -5,6 +5,8 @@ export const QUESTION_API = "http://localhost:8080/question/";
 export const LOGIN_API = "http://localhost:8080/api/v1/auth/authenticate"
 export const ANSWER_API = "http://localhost:8080/add/answer/"
 export const DELETE_ANSWER_API = "http://localhost:8080/delete/answer"
+export const ADD_QUESTION_API = "http://localhost:8080/add/question"
+
 
 
 export const setTokenCookie = (data) => {
