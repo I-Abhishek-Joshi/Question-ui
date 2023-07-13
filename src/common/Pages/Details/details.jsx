@@ -3,38 +3,33 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   ANSWER_API,
-  DELETE_ANSWER_API,
   QUESTION_API,
+  getLoggedInUserId,
   getTokenCookie,
 } from "../../assets/constant/constants";
 
 import UserResponse from "../../components/UserResponse/userResponse";
 import { useParams } from "react-router-dom";
+import { fetchQuestionAction } from "../../actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 const Details = () => {
   const { questionId } = useParams();
+  const dispatch = useDispatch();
+
   const defaultColor = "#848484";
   const primary = "#0275FF";
   const primaryDisable = "#B2CFFF";
 
-  const [question, setQuestion] = useState({});
   const [answer, setAnswer] = useState("");
   const [isPostingAnswer, setIsPostingAnswer] = useState(false);
+
+  const question = useSelector((state) => state.question?.questionDetail)
 
   const refresh = () => {
     window.location.reload();
   };
   const fetchQuestion = async () => {
-    try {
-      const url = QUESTION_API + questionId;
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${getTokenCookie()}`,
-        },
-      });
-      setQuestion(response.data);
-    } catch (error) {
-      console.log("ERROR ", error);
-    }
+    dispatch(fetchQuestionAction({ questionId }))
   };
 
   const postAnswerApi = () => {
@@ -118,6 +113,7 @@ const Details = () => {
         tags={question.tags}
         type={"question"}
         refresh={refresh}
+        questionId = {question.questionId}
       />
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <Grid margin={"10px 0"}>
@@ -125,6 +121,9 @@ const Details = () => {
           {question.answersCount} Answers
         </Typography>
       </Grid>
+      {question.answers?.length !== 0 && (
+        <Divider style={{ backgroundColor: "gray" }}></Divider>
+      )}
       {question.answers?.map((answer) => {
         return (
           <>
@@ -145,9 +144,7 @@ const Details = () => {
           </>
         );
       })}
-      {question.answers?.length === 0 && (
-        <Divider style={{ backgroundColor: "gray" }}></Divider>
-      )}
+
       <Grid margin={"10px 0"}>
         <Typography textAlign={"left"} fontSize={"20px"}>
           Your Answers

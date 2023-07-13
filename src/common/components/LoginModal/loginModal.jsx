@@ -29,7 +29,7 @@ const LoginModal = () => {
 
   const navigate = useNavigate();
   const currentLocation = useSelector(
-    (state) => state.locationReducer.currentLocation
+    (state) => state.location.currentLocation
   );
 
   const disableLoginButton = () => {

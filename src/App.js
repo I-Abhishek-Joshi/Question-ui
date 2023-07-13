@@ -12,7 +12,7 @@ import Login from "./common/Pages/Login/login";
 import Register from "./common/Pages/Register/register";
 
 function App() {
-  const isLoginModalOpen = useSelector((state) => state.toggleLoginModalReducer.isLoginModalOpen)
+  const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen)
   const location = useLocation();
   const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
   return (

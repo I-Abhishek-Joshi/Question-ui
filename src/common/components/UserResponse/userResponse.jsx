@@ -5,6 +5,8 @@ import { Chip, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DELETE_ANSWER_API, getLoggedInUserId, getTokenCookie } from "../../assets/constant/constants";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { updateQuestionAction } from "../../actions/actions";
 
 const UserResponse = ({
   upvotes,
@@ -17,10 +19,17 @@ const UserResponse = ({
   userId,
   refresh,
   answerId,
-  questionId
+  questionId,
 }) => {
   const userColor = "#D9E9F7";
   const primary = "#0275FF";
+  const success = "#4BB543";
+  const danger = "#DC4C64"
+
+  const dispatch = useDispatch();
+
+  const upvote = useSelector((state) => state.question?.questionDetail?.upvotedUsers?.includes(getLoggedInUserId()))
+  const downvote = useSelector((state) => state.question?.questionDetail?.downvotedUsers?.includes(getLoggedInUserId()))
 
   const deleteAnswerApi = (answer) => {
     return new Promise((resolve, reject) => {
@@ -57,6 +66,11 @@ const UserResponse = ({
     })
   }
 
+  const updateQuestion = ({ questionTitle, questionDescription, voteType }) => {
+    const userId = getLoggedInUserId();
+    dispatch(updateQuestionAction({ userId, questionId, questionTitle, questionDescription, voteType }))
+  }
+
   return (
     <Grid display={"flex"}>
       <Grid justifyContent={"center"} display={"flex"} margin={"15px 0"}>
@@ -68,27 +82,34 @@ const UserResponse = ({
         >
           <ArrowDropUpIcon
             style={{
-              border: "0.5px solid",
+              border: "0.5px solid #cccccc",
               borderRadius: "50%",
-              fontSize: "30px",
+              fontSize: "35px",
               cursor: "pointer",
+              color: upvote? success : null
             }}
+
+            onClick={ () => updateQuestion({ voteType : "UPVOTE" }) }
           />
           <Typography textAlign={"left"} fontSize={"20px"}>
             {upvotes - downvotes}
           </Typography>
           <ArrowDropDownIcon
             style={{
-              border: "0.5px solid",
+              border: "0.5px solid #cccccc",
               borderRadius: "50%",
-              fontSize: "30px",
+              fontSize: "35px",
               cursor: "pointer",
+              color : downvote? danger : null
             }}
+            onClick={ () => updateQuestion({ voteType : "DOWNVOTE" }) }
           />
         </Grid>
       </Grid>
       <Grid padding={"10px"} flexGrow={1}>
+        <Grid  mt={1}>
         <Typography textAlign={"left"} whiteSpace={"pre-line"}>{responseData}</Typography>
+        </Grid>
         <Grid mt={"10px"} display={"flex"} justifyContent={"flex-start"}>
           {tags?.map((tag) => (
             <Chip
