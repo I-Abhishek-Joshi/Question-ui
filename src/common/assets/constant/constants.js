@@ -10,8 +10,11 @@ export const ADD_QUESTION_API = "http://localhost:8080/add/question";
 export const UPDATE_QUESTION_API = "http://localhost:8080/update/question";
 
 export const setTokenCookie = (data) => {
-  Cookies.set("jwtToken", data.token);
-  Cookies.set("userId", data.userId);
+  const expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + 1000 * 60 * 60 * 24);
+
+  Cookies.set("jwtToken", data.token, { expires: expirationDate });
+  Cookies.set("userId", data.userId, { expires: expirationDate });
 };
 
 export const getTokenCookie = () => {
@@ -29,38 +32,54 @@ export const deleteTokenCookie = () => {
 
 export const updateQuestionApi = ({ questionId, userId, voteType }) => {
   return new Promise((resolve, reject) => {
-    axios.patch(
-      UPDATE_QUESTION_API,
-      {
-        "questionId": questionId,
-        "userId" : userId,
-        "voteType": voteType
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${getTokenCookie()}`,
+    axios
+      .patch(
+        UPDATE_QUESTION_API,
+        {
+          questionId: questionId,
+          userId: userId,
+          voteType: voteType,
         },
-      }
-    ).then((response) => {
-      if(response.status === 200) {
-        resolve(response)
-      } else {
-        reject(response)
-      }
-    }).catch((error) => {
-      reject(error)
-    });
+        {
+          headers: {
+            Authorization: `Bearer ${getTokenCookie()}`,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
 export const fetchQuestion = async ({ questionId }) => {
   return new Promise((resolve, reject) => {
     const url = QUESTION_API + questionId;
-    axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${getTokenCookie()}`,
-      },
-    }).then((response) => resolve(response))
-    .catch((error) => reject(error));
-  })
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${getTokenCookie()}`,
+        },
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+};
+
+export const fetchQuestionList = async ({ searchTerm }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(ALL_QUESTIONS_API, {
+        searchTerm: searchTerm,
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
 };

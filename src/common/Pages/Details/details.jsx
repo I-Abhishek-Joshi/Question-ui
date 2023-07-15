@@ -112,6 +112,7 @@ const Details = () => {
         userName={question.userName}
         tags={question.tags}
         type={"question"}
+        userId={question.userId}
         refresh={refresh}
         questionId = {question.questionId}
       />

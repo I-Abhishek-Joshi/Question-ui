@@ -1,40 +1,53 @@
-import { Box, Grid, TextField, Button, IconButton, Typography } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Grid,
+  TextField,
+  Button,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import React, { useRef, useState } from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import { isUserAuthenticated } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { currentLocation } from "../../actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { currentLocation, setSearchTermAction } from "../../actions/actions";
 import { deleteTokenCookie } from "../../assets/constant/constants";
 
 const Header = () => {
   const primary = "#0175FF";
 
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState("");
+  const currentSearchText =
+    useSelector((state) => state?.search?.searchTerm) || "";
+  const searchInputRef = useRef(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOnLoginRegisterClick = () => {
-    dispatch(currentLocation("/"))
-    navigate("/login")
+    dispatch(currentLocation("/"));
+    navigate("/login");
   };
 
   const handleLogout = () => {
-    deleteTokenCookie()
-    dispatch(currentLocation("/"))
-    navigate("/login")
-  }
+    deleteTokenCookie();
+    dispatch(currentLocation("/"));
+    navigate("/login");
+  };
 
   const handleSearch = () => {
-    
-  }
+    dispatch(setSearchTermAction(searchText.trim()));
+  };
+
   const handleKeyPress = (event) => {
-    if (event.key === "Enter" && searchText.trim() !== "") {
-      handleSearch()
+    if (event.key === "Enter" && searchText.trim() !== currentSearchText) {
+      searchInputRef.current.blur();
+      handleSearch();
     }
   };
+
   return (
     <Grid
       width={"100%"}
@@ -50,7 +63,7 @@ const Header = () => {
     >
       <Grid md={3}>
         <Link to={"/"}>
-        <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
+          <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
         </Link>
       </Grid>
       <Grid md={6}>
@@ -74,7 +87,7 @@ const Header = () => {
               <Button
                 variant="contained"
                 style={{ height: "30px", backgroundColor: primary }}
-                onClick={ handleSearch }
+                onClick={handleSearch}
               >
                 Search
               </Button>
@@ -82,7 +95,8 @@ const Header = () => {
           }}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={handleKeyPress} 
+          onKeyDown={handleKeyPress}
+          inputRef={searchInputRef}
         />
       </Grid>
       {!isUserAuthenticated() && (
@@ -103,7 +117,7 @@ const Header = () => {
             variant="contained"
             height={"40px"}
             style={{ backgroundColor: primary }}
-            onClick={ handleLogout }
+            onClick={handleLogout}
           >
             Logout
           </Button>

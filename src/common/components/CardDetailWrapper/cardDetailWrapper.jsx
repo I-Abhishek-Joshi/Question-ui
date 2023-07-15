@@ -3,48 +3,49 @@ import CardDetails from "../CardDetails/cardDetails";
 import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
-import axios from "axios";
-import '../../../App.css'
-import {
-  ALL_QUESTIONS_API,
-} from "../../assets/constant/constants";
+import "../../../App.css";
 import { isUserAuthenticated } from "../../utils/utils";
-import { useDispatch } from "react-redux";
-import { currentLocation, openLoginModal } from "../../actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  currentLocation,
+  fetchQuestionListAction,
+  openLoginModal,
+} from "../../actions/actions";
 
 const CardDetailWrapper = () => {
-  const dispatch = useDispatch()
-  const [questions, setQuestions] = useState([]);
+  const dispatch = useDispatch();
+  const questionList =
+    useSelector((state) => state?.questionList?.questionList) || [];
 
-  const fetchAllQuestion = async () => {
-    try {
-      const response = await axios.get(ALL_QUESTIONS_API);
-      setQuestions(response.data);
-    } catch (error) {
-      console.log("ERROR ", error);
-    }
-  };
+  const searchTerm = useSelector((state) => state?.search?.searchTerm) || "";
+  const [loading, setLoading] = useState(true);
 
   const toggleScroll = () => {
-    document.body.classList.toggle('bodyNoScroll')
-  }
+    document.body.classList.toggle("bodyNoScroll");
+  };
 
   useEffect(() => {
-    fetchAllQuestion();
-  }, []);
+    const fetchData = () => {
+      dispatch(fetchQuestionListAction({ searchTerm })).then(() =>
+        setLoading(false)
+      );
+    };
+
+    fetchData();
+  }, [searchTerm]);
 
   const primary = "#0275FF";
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCreatePost = () => {
-    if(isUserAuthenticated()) {
-      toggleScroll()
-      setIsOpen(true)
+    if (isUserAuthenticated()) {
+      toggleScroll();
+      setIsOpen(true);
     } else {
-      dispatch(currentLocation("/"))
-      dispatch(openLoginModal())
+      dispatch(currentLocation("/"));
+      dispatch(openLoginModal());
     }
-  }
+  };
   return (
     <Grid
       container
@@ -66,7 +67,7 @@ const CardDetailWrapper = () => {
             fontSize: "15px",
             borderRadius: "10px",
           }}
-          onClick={ handleCreatePost } 
+          onClick={handleCreatePost}
         >
           New Post
         </Button>
@@ -85,14 +86,21 @@ const CardDetailWrapper = () => {
           Post to thread
         </Button>
       </Grid>
-      {questions.map((question) => (
-        <Grid item width={"100%"}>
-          <CardDetails question={question} />
-        </Grid>
-      ))}
+      {loading && <p>Loading...</p>}
+      {!loading &&
+        questionList.map((question) => (
+          <Grid item width={"100%"}>
+            <CardDetails question={question} />
+          </Grid>
+        ))}
       {isOpen && (
-        <Box style={{ position: "absolute", left: 0, top: 0 }} zIndex={20} width={"100vw"} height={"100vh"}>
-          <CreatePostModal closeModal={setIsOpen} toggleScroll = {toggleScroll}/>
+        <Box
+          style={{ position: "absolute", left: 0, top: 0 }}
+          zIndex={20}
+          width={"100vw"}
+          height={"100vh"}
+        >
+          <CreatePostModal closeModal={setIsOpen} toggleScroll={toggleScroll} />
         </Box>
       )}
     </Grid>

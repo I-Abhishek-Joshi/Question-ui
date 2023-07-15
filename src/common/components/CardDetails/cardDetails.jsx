@@ -18,6 +18,7 @@ import { isUserAuthenticated } from "../../utils/utils";
 import { useDispatch } from "react-redux";
 import { currentLocation, openLoginModal } from "../../actions/actions";
 import '../../../App.css'
+import { getLoggedInUserId } from "../../assets/constant/constants";
 
 const CardDetails = ({ question }) => {
   const chipColor = "#F0F0F0";
@@ -25,6 +26,7 @@ const CardDetails = ({ question }) => {
   const primary = "#0275FF";
   const orange = "#ff781f";
   const defaultColor = "#848484";
+  const danger = "#DC4C64";
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -187,7 +189,7 @@ const CardDetails = ({ question }) => {
         <Box display="flex" justifyContent="space-between" pt={2} pb={2}>
           <Box display="flex" alignItems="center">
             <ArrowUpwardIcon
-              style={{ color: defaultColor, fontSize: "15px" }}
+              style={{ color: isUserAuthenticated() && question?.upvotedUsers?.includes(getLoggedInUserId())? success : defaultColor, fontSize: "18px" }}
             />
             <Typography
               variant="body1"
@@ -199,7 +201,7 @@ const CardDetails = ({ question }) => {
               {question.upvotes}
             </Typography>
             <ArrowDownwardIcon
-              style={{ color: defaultColor, fontSize: "15px" }}
+              style={{ color: isUserAuthenticated() && question?.downvotedUsers?.includes(getLoggedInUserId())? danger : defaultColor, fontSize: "18px" }}
             />
             <Typography
               variant="body1"

@@ -28,9 +28,7 @@ const LoginModal = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const navigate = useNavigate();
-  const currentLocation = useSelector(
-    (state) => state.location.currentLocation
-  );
+  const currentLocation = useSelector((state) => state.location.currentLocation);
 
   const disableLoginButton = () => {
     return email.length === 0 || password.length === 0;
