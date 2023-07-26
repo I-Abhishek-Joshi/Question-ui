@@ -3,13 +3,14 @@ import "./App.css";
 import Header from "./common/components/Header/header";
 import Footer from "./common/components/Footer/footer";
 import Home from "./common/Pages/Home/home";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Details from "./common/Pages/Details/details";
 import LoginModal from "./common/components/LoginModal/loginModal";
 import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import Login from "./common/Pages/Login/login";
 import Register from "./common/Pages/Register/register";
+import { isUserAuthenticated } from "./common/utils/utils";
 
 function App() {
   const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen)
@@ -27,7 +28,7 @@ function App() {
       }
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:questionId" element={<Details />} />
+        <Route path="/:questionId" element={isUserAuthenticated() ? <Details /> : <Navigate to="/login"/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

@@ -3,15 +3,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   ANSWER_API,
-  QUESTION_API,
   getLoggedInUserId,
   getTokenCookie,
 } from "../../assets/constant/constants";
 
 import UserResponse from "../../components/UserResponse/userResponse";
 import { useParams } from "react-router-dom";
-import { fetchQuestionAction } from "../../actions/actions";
+import {
+  fetchQuestionAction,
+  updateQuestionAction,
+} from "../../actions/actions";
 import { useDispatch, useSelector } from "react-redux";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+
 const Details = () => {
   const { questionId } = useParams();
   const dispatch = useDispatch();
@@ -23,13 +28,20 @@ const Details = () => {
   const [answer, setAnswer] = useState("");
   const [isPostingAnswer, setIsPostingAnswer] = useState(false);
 
-  const question = useSelector((state) => state.question?.questionDetail)
+  const question = useSelector((state) => state.question?.questionDetail);
+  const favourite = question?.favouriteAddedUsers?.includes(
+    getLoggedInUserId()
+  );
 
   const refresh = () => {
     window.location.reload();
   };
   const fetchQuestion = async () => {
-    dispatch(fetchQuestionAction({ questionId }))
+    dispatch(fetchQuestionAction({ questionId }));
+  };
+
+  const toggleFavouriteQuestion = ({ userId, questionId }) => {
+    dispatch(updateQuestionAction({ userId, questionId, favourite: true }));
   };
 
   const postAnswerApi = () => {
@@ -86,21 +98,42 @@ const Details = () => {
       direction={"column"}
       padding={"10px 24px"}
     >
-      <Grid display={"flex"} flexDirection={"column"} margin={"10px 0"}>
-        <Typography fontSize={"1.7rem"} textAlign={"left"}>
-          {question.questionTitle}
-        </Typography>
-        <Grid display={"flex"}>
-          <Typography fontSize={"14px"} color={defaultColor}>
-            Asked {question.lastModifiedDate}
+      <Grid display={"flex"} alignItems={"center"}>
+        <Grid
+          display={"flex"}
+          flexDirection={"column"}
+          margin={"10px 0"}
+          flexGrow={1}
+        >
+          <Typography fontSize={"1.7rem"} textAlign={"left"}>
+            {question.questionTitle}
           </Typography>
-          <Typography
-            fontSize={"14px"}
-            marginLeft={"14px"}
-            color={defaultColor}
-          >
-            Viewed {question.views} times
-          </Typography>
+          <Grid display={"flex"}>
+            <Typography fontSize={"14px"} color={defaultColor}>
+              Asked {question.lastModifiedDate}
+            </Typography>
+            <Typography
+              fontSize={"14px"}
+              marginLeft={"14px"}
+              color={defaultColor}
+            >
+              Viewed {question.views} times
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid>
+          {!favourite && (
+            <StarBorderIcon
+              style={{ fontSize: "30px", color: "orange", cursor: "pointer" }}
+              onClick={() => toggleFavouriteQuestion({userId : getLoggedInUserId(), questionId: question.questionId})}
+            />
+          )}
+          {favourite && (
+            <StarOutlinedIcon
+              style={{ fontSize: "30px", color: "orange", cursor: "pointer" }}
+              onClick={() => toggleFavouriteQuestion({userId : getLoggedInUserId(), questionId: question.questionId})}
+            />
+          )}
         </Grid>
       </Grid>
       <Divider style={{ backgroundColor: "gray" }}></Divider>
@@ -114,7 +147,7 @@ const Details = () => {
         type={"question"}
         userId={question.userId}
         refresh={refresh}
-        questionId = {question.questionId}
+        questionId={question.questionId}
       />
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <Grid margin={"10px 0"}>
@@ -136,10 +169,9 @@ const Details = () => {
               userName={answer.userName}
               type={"answer"}
               userId={answer.userId}
-              refresh = {refresh}
-              answerId = {answer.answerId}
-              questionId = {answer.questionId}
-              
+              refresh={refresh}
+              answerId={answer.answerId}
+              questionId={question.questionId}
             />
             <Divider style={{ backgroundColor: "gray" }}></Divider>
           </>
@@ -159,7 +191,7 @@ const Details = () => {
           variant="outlined"
           fullWidth
           value={answer}
-          style={{whiteSpace: "pre-wrap", overflowWrap: "break-word"}}
+          style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
           onChange={(e) => setAnswer(e.target.value)}
           disabled={isPostingAnswer}
         />

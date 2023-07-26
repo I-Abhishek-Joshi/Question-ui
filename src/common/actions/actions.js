@@ -1,4 +1,4 @@
-import { fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
+import { fetchFilteredQuestionList, fetchLoggedInUser, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
 
 export const openLoginModal = () => {
   return {
@@ -71,5 +71,43 @@ export const setSearchTermAction = (searchTerm) => {
   return {
     type: "SEARCH_TERM",
     payload: searchTerm,
+  };
+};
+
+export const fetchLoggedInUserAction = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetchLoggedInUser({userId});
+      dispatch({
+        type: "FETCH_LOGGED_IN_USER_SUCCESS",
+        payload: response.data
+      });
+    } catch {
+      dispatch({
+        type: "FETCH_LOGGED_IN_USER_FAILURE",
+      });
+    }
+  };
+};
+
+export const removeLoggedInUser = () => {
+  return {
+    type: "REMOVE_LOGGED_IN_USER"
+  }
+}
+
+export const fetchFilteredQuestionListAction = (payload) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetchFilteredQuestionList(payload);
+      dispatch({
+        type: "FETCH_FILTERED_QUESTION_LIST_SUCCESS",
+        payload: response.data
+      });
+    } catch {
+      dispatch({
+        type: "FETCH_FILTERED_QUESTION_LIST_FAILURE",
+      });
+    }
   };
 };

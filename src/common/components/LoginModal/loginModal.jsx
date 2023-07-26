@@ -60,7 +60,6 @@ const LoginModal = () => {
         setTokenCookie(data);
         dispatch(closeLoginModal());
         navigate(currentLocation);
-        console.log("location is  : ", currentLocation);
         document.body.classList.remove("bodyNoScroll");
       })
       .catch((error) => {

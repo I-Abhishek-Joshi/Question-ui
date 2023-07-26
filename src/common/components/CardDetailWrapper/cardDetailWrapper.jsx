@@ -11,6 +11,8 @@ import {
   fetchQuestionListAction,
   openLoginModal,
 } from "../../actions/actions";
+import { FETCH_LOGGED_IN_USER_API } from "../../assets/constant/constants";
+import axios from "axios";
 
 const CardDetailWrapper = () => {
   const dispatch = useDispatch();
@@ -71,7 +73,7 @@ const CardDetailWrapper = () => {
         >
           New Post
         </Button>
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<AddIcon />}
           style={{
@@ -84,7 +86,7 @@ const CardDetailWrapper = () => {
           }}
         >
           Post to thread
-        </Button>
+        </Button> */}
       </Grid>
       {loading && <p>Loading...</p>}
       {!loading &&

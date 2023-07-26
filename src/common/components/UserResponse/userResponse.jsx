@@ -43,8 +43,6 @@ const UserResponse = ({
     )
   );
 
-  console.log("hi", userId, getLoggedInUserId());
-
   const deleteAnswerApi = (answer) => {
     return new Promise((resolve, reject) => {
       axios
@@ -94,10 +92,6 @@ const UserResponse = ({
   };
 
   return (
-    <Grid position={"relative"}>
-      <Grid position={"absolute"} right={0}>
-        <MoreHorizIcon style={{ color: iconBorderColor, cursor: "pointer" }} />
-      </Grid>
       <Grid display={"flex"}>
         <Grid justifyContent={"center"} display={"flex"} margin={"15px 0"}>
           <Grid
@@ -202,7 +196,6 @@ const UserResponse = ({
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
     </Grid>
   );
 };

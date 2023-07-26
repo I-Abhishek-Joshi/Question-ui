@@ -13,7 +13,7 @@ import face from "../../assets/images/face.jpg";
 import CommentIcon from "@mui/icons-material/Comment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { isUserAuthenticated } from "../../utils/utils";
 import { useDispatch } from "react-redux";
 import { currentLocation, openLoginModal } from "../../actions/actions";

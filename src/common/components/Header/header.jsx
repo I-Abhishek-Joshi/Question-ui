@@ -12,7 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { isUserAuthenticated } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { currentLocation, setSearchTermAction } from "../../actions/actions";
+import { currentLocation, removeLoggedInUser, setSearchTermAction } from "../../actions/actions";
 import { deleteTokenCookie } from "../../assets/constant/constants";
 
 const Header = () => {
@@ -33,6 +33,7 @@ const Header = () => {
 
   const handleLogout = () => {
     deleteTokenCookie();
+    dispatch(removeLoggedInUser())
     dispatch(currentLocation("/"));
     navigate("/login");
   };

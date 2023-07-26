@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import "../../../App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLoginModal } from "../../actions/actions";
+import { closeLoginModal, fetchLoggedInUserAction } from "../../actions/actions";
 import axios from "axios";
-import { LOGIN_API, setTokenCookie } from "../../assets/constant/constants";
+import { LOGIN_API, fetchLoggedInUser, setTokenCookie } from "../../assets/constant/constants";
 import { useNavigate } from "react-router-dom";
 
 const LoginInputs = () => {
@@ -54,10 +54,10 @@ const LoginInputs = () => {
 
     callLoginApi()
       .then((data) => {
+        dispatch(fetchLoggedInUserAction(data.userId))
         setTokenCookie(data);
         dispatch(closeLoginModal());
         navigate(currentLocation);
-        console.log("location is  : ", currentLocation);
         document.body.classList.remove("bodyNoScroll");
       })
       .catch((error) => {

@@ -1,18 +1,30 @@
 import { Box, Grid, Typography, Avatar } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import face from "../../assets/images/face.jpg";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import Dropdown from "../Dropdown/dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserAuthenticated } from "../../utils/utils";
+import { fetchLoggedInUserAction } from "../../actions/actions";
+import { getLoggedInUserId } from "../../assets/constant/constants";
 
 const Profile = () => {
   const profileNameColor = "#ee9f27";
   const topDropdownOptions = [
-    "Office",
-    "Shema Websites",
-    "Jensera project",
-    "Elementary School Friends",
-    "Trip Wandeears",
+    "Favourite questions",
+    "My questions",
+    "Upvoted questions",
   ];
+  const user = useSelector((state) => state?.user?.user) || null;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if(isUserAuthenticated() && !user) {
+      dispatch(fetchLoggedInUserAction(getLoggedInUserId()))
+    }
+  })
+
+  
+
   return (
     <Grid
       container
@@ -30,58 +42,57 @@ const Profile = () => {
       p={2}
     >
       <Box display={"flex"} flexDirection={"column"} width={"100%"}>
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          width={"100%"}
-        >
-          <Avatar alt="Remy Sharp" src={face} sx={{ width: 70, height: 70 }} />
-          <Box display={"flex"} alignItems={"center"}>
-            <MilitaryTechIcon
-              style={{ fontSize: "15px", color: profileNameColor }}
+        {user && (
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            width={"100%"}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src={face}
+              sx={{ width: 70, height: 70 }}
             />
+            <Box display={"flex"} alignItems={"center"}>
+              <MilitaryTechIcon
+                style={{ fontSize: "15px", color: profileNameColor }}
+              />
+              <Typography
+                fontSize={"12px"}
+                ml={0.5}
+                color={profileNameColor}
+                width={"100%"}
+              >
+                {user.medals.toFixed(1)}
+              </Typography>
+            </Box>
             <Typography
-              fontSize={"12px"}
-              ml={0.5}
+              variant="body1"
+              style={{ fontSize: "18px" }}
+              fontWeight={600}
               color={profileNameColor}
               width={"100%"}
             >
-              4.2
+              {`${user.firstName} ${user.lastName}`}
             </Typography>
-          </Box>
-          <Typography
-            variant="body1"
-            style={{ fontSize: "16px" }}
-            fontWeight={600}
-            color={profileNameColor}
-            width={"100%"}
-          >
-            Abhishek Joshi
-          </Typography>
-          <Typography
-            variant="body1"
-            style={{ fontSize: "11px" }}
-            width={"100%"}
-          >
-            Lucknow, Uttar Pradesh
-          </Typography>
-          <Typography
-            variant="body1"
-            style={{ fontSize: "9px" }}
-            width={"100%"}
-          >
-            Associate Software Engineer
-          </Typography>
-        </Grid>
-      </Box>
-      <Box style={{ margin: "40px auto 5px" }} width={"100%"}>
-        <Dropdown heading={"Channel"} options={topDropdownOptions} />
+            <Typography
+              variant="body1"
+              style={{ fontSize: "12px" }}
+              width={"100%"}
+            >
+              {`${user.city} ${user.state}`}
+            </Typography>
+          </Grid>
+        )}
       </Box>
       <Box style={{ margin: "10px auto 5px" }} width={"100%"}>
-        <Dropdown heading={"Channel"} options={topDropdownOptions} />
+        <Dropdown heading={"Channel"} options={topDropdownOptions} dispatch={dispatch} />
       </Box>
+      {/* <Box style={{ margin: "10px auto 5px" }} width={"100%"}>
+        <Dropdown heading={"Channel"} options={topDropdownOptions} />
+      </Box> */}
     </Grid>
   );
 };
