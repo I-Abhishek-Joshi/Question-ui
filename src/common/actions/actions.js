@@ -1,4 +1,4 @@
-import { fetchFilteredQuestionList, fetchLoggedInUser, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
+import { deleteNotifications, fetchFilteredQuestionList, fetchLoggedInUser, fetchNotifications, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
 
 export const openLoginModal = () => {
   return {
@@ -107,6 +107,37 @@ export const fetchFilteredQuestionListAction = (payload) => {
     } catch {
       dispatch({
         type: "FETCH_FILTERED_QUESTION_LIST_FAILURE",
+      });
+    }
+  };
+};
+
+export const fetchNotificationsAction = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetchNotifications({userId});
+      dispatch({
+        type: "FETCH_NOTIFICATIONS_SUCCESS",
+        payload: response.data
+      });
+    } catch {
+      dispatch({
+        type: "FETCH_NOTIFICATIONS_FAILURE",
+      });
+    }
+  };
+};
+
+export const deleteNotificationsAction = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await deleteNotifications({userId});
+      dispatch({
+        type: "DELETE_NOTIFICATIONS_SUCCESS",
+      });
+    } catch {
+      dispatch({
+        type: "DELETE_NOTIFICATIONS_FAILURE",
       });
     }
   };

@@ -52,6 +52,7 @@ const Details = () => {
           {
             questionId: question.questionId,
             answer: answer.trim().replace(/\n/g, "%n%"),
+            askedUserId: question.userId
           },
           {
             headers: {

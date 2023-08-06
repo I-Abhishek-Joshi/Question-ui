@@ -5,9 +5,6 @@ import CardDetailWrapper from "../../components/CardDetailWrapper/cardDetailWrap
 import FilterTab from "../../components/FilterTab/filterTab";
 
 const Home = () => {
-  useEffect(() => {
-    
-  });
   return (
     <Grid container columnSpacing={6} padding={"0 20px"}>
       <Grid

@@ -10,6 +10,7 @@ export const DELETE_ANSWER_API = "http://localhost:8080/delete/answer";
 export const ADD_QUESTION_API = "http://localhost:8080/add/question";
 export const UPDATE_QUESTION_API = "http://localhost:8080/update/question";
 export const FETCH_LOGGED_IN_USER_API = "http://localhost:8080/user";
+export const FETCH_NOTIFICATION = "http://localhost:8080/notification";
 
 export const setTokenCookie = (data) => {
   const expirationDate = new Date();
@@ -123,3 +124,32 @@ export const fetchFilteredQuestionList = async ({ questionId, userId, filters })
       .catch((error) => reject(error));
   });
 };
+
+export const fetchNotifications = async({ userId }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(FETCH_NOTIFICATION + `?userId=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${getTokenCookie()}`,
+        }
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  })
+}
+
+export const deleteNotifications = async({ userId }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(FETCH_NOTIFICATION, {
+        data: {
+          userId: userId
+        },
+        headers: {
+          Authorization: `Bearer ${getTokenCookie()}`,
+        }
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  })
+}

@@ -5,6 +5,7 @@ import updateQuestionReducer from './updateQuestionReducer'
 import searchReducer from './searchReducer';
 import questionListReducer from './questionListReducer';
 import userReducer from './userReducer';
+import notificationReducer from './notificationReducer.js';
 
 const rootReducer = combineReducers({
     modal: toggleLoginModalReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     question: updateQuestionReducer,
     search: searchReducer,
     questionList: questionListReducer,
-    user: userReducer
+    user: userReducer,
+    notification: notificationReducer,
 })
 
 export default rootReducer;
