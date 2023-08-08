@@ -10,31 +10,56 @@ import {
   currentLocation,
   fetchQuestionListAction,
   openLoginModal,
+  setFilterAction,
 } from "../../actions/actions";
-import { FETCH_LOGGED_IN_USER_API } from "../../assets/constant/constants";
-import axios from "axios";
+import { getLoggedInUserId } from "../../assets/constant/constants";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const CardDetailWrapper = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const questionList =
     useSelector((state) => state?.questionList?.questionList) || [];
 
-  const searchTerm = useSelector((state) => state?.search?.searchTerm) || "";
+  const filter = useSelector((state) => state?.filter?.filter) || {};
+  const value = useSelector((state) => state?.filter?.filter?.value) || "";
+  const searchTerm =
+    useSelector((state) => state?.filter?.filter?.searchTerm) || "";
   const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  const queryParams = new URLSearchParams(location.search);
+  const searchTermURL = queryParams.get("searchTerm") || "";
+  const valueURL = queryParams.get("value") || "";
 
   const toggleScroll = () => {
     document.body.classList.toggle("bodyNoScroll");
   };
-
   useEffect(() => {
+    setLoading(true);
+    if (initialLoad) {
+      dispatch(setFilterAction({ searchTerm: searchTermURL, value: valueURL }));
+    }
     const fetchData = () => {
-      dispatch(fetchQuestionListAction({ searchTerm })).then(() =>
-        setLoading(false)
-      );
+      dispatch(
+        fetchQuestionListAction({
+          searchTerm: initialLoad ? searchTermURL : filter?.searchTerm || "",
+          userId: getLoggedInUserId(),
+          filters: initialLoad
+            ? valueURL.length > 0
+              ? [valueURL]
+              : []
+            : filter?.value?.length > 0
+            ? [filter?.value]
+            : [],
+        })
+      ).then(() => {
+        setLoading(false);
+        setInitialLoad(false);
+      });
     };
-
     fetchData();
-  }, [searchTerm]);
+  }, [searchTerm, value]);
 
   const primary = "#0275FF";
   const [isOpen, setIsOpen] = useState(false);
@@ -73,20 +98,6 @@ const CardDetailWrapper = () => {
         >
           New Post
         </Button>
-        {/* <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          style={{
-            backgroundColor: primary,
-            textTransform: "none",
-            fontWeight: "600",
-            fontSize: "15px",
-            marginLeft: "12px",
-            borderRadius: "10px",
-          }}
-        >
-          Post to thread
-        </Button> */}
       </Grid>
       {loading && <p>Loading...</p>}
       {!loading &&

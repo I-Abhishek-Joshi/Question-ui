@@ -1,4 +1,4 @@
-import { deleteNotifications, fetchFilteredQuestionList, fetchLoggedInUser, fetchNotifications, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
+import { deleteNotifications, fetchLoggedInUser, fetchNotifications, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
 
 export const openLoginModal = () => {
   return {
@@ -67,12 +67,13 @@ export const fetchQuestionListAction = (payload) => {
   };
 };
 
-export const setSearchTermAction = (searchTerm) => {
+export const setFilterAction = (payload) => {
   return {
-    type: "SEARCH_TERM",
-    payload: searchTerm,
+    type: "SET_FILTER",
+    payload: payload,
   };
 };
+
 
 export const fetchLoggedInUserAction = (userId) => {
   return async (dispatch) => {
@@ -95,22 +96,6 @@ export const removeLoggedInUser = () => {
     type: "REMOVE_LOGGED_IN_USER"
   }
 }
-
-export const fetchFilteredQuestionListAction = (payload) => {
-  return async (dispatch) => {
-    try {
-      const response = await fetchFilteredQuestionList(payload);
-      dispatch({
-        type: "FETCH_FILTERED_QUESTION_LIST_SUCCESS",
-        payload: response.data
-      });
-    } catch {
-      dispatch({
-        type: "FETCH_FILTERED_QUESTION_LIST_FAILURE",
-      });
-    }
-  };
-};
 
 export const fetchNotificationsAction = (userId) => {
   return async (dispatch) => {

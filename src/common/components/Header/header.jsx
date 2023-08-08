@@ -9,14 +9,14 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
-import { isUserAuthenticated } from "../../utils/utils";
-import { Link, useNavigate } from "react-router-dom";
+import { buildParams, isUserAuthenticated } from "../../utils/utils";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentLocation,
   fetchNotificationsAction,
   removeLoggedInUser,
-  setSearchTermAction,
+  setFilterAction,
 } from "../../actions/actions";
 import {
   deleteTokenCookie,
@@ -27,20 +27,22 @@ import NotificationBox from "../NotificationBox/notificationBox";
 
 const Header = () => {
   const primary = "#0175FF";
-
-  const [searchText, setSearchText] = useState("");
+  const queryParams = new URLSearchParams(window.location.search);
+  const [searchText, setSearchText] = useState(
+    queryParams.get("searchTerm") || ""
+  );
   const [openNotification, setOpenNotification] = useState(false);
+  const filter = useSelector((state) => state?.filter?.filter) || null;
   const currentSearchText =
-    useSelector((state) => state?.search?.searchTerm) || "";
+    useSelector((state) => state?.filter?.filter?.searchTerm) || "";
   const searchInputRef = useRef(null);
   const notificationRef = useRef(null);
 
   const notification =
     useSelector((state) => state?.notification?.notification) || null;
   const notificationNumber = notification
-    ? notification.upvoteCount +
-      notification.downvoteCount +
-      notification.notificationComments.length
+    ? notification.notificationComments.length +
+      notification.notificationVotes.length
     : 0;
 
   const dispatch = useDispatch();
@@ -59,7 +61,18 @@ const Header = () => {
   };
 
   const handleSearch = () => {
-    dispatch(setSearchTermAction(searchText.trim()));
+    if (isUserAuthenticated()) {
+      filter.searchTerm = searchText.trim();
+      dispatch(setFilterAction(filter));
+
+      const newUrl = `${window.location.pathname}?${buildParams(filter)}`;
+      window.history.pushState({}, "", newUrl);
+    } else if (
+      searchText.trim().length > 0 ||
+      searchText.trim() !== currentSearchText
+    ) {
+      navigate("/login");
+    }
   };
 
   const handleKeyPress = (event) => {
@@ -70,24 +83,30 @@ const Header = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+    if (
+      notificationRef.current &&
+      !notificationRef.current.contains(event.target)
+    ) {
       setOpenNotification(false);
     }
   };
 
+  const handleLogoClick = () => {
+    setSearchText("");
+    dispatch(setFilterAction({ value: "", searchTerm: "" }));
+    navigate("/");
+  };
 
   useEffect(() => {
     if (isUserAuthenticated() && !notification) {
       dispatch(fetchNotificationsAction(getLoggedInUserId()));
     }
-    document.addEventListener('click',handleClickOutside)
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-
-  }, []);
-  
+  }, [notification?.notificationComments, notification?.notificationVotes, notificationNumber]);
 
   return (
     <Grid
@@ -102,10 +121,8 @@ const Header = () => {
       container
       marginBottom={"32px"}
     >
-      <Grid md={3}>
-        <Link to={"/"}>
-          <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
-        </Link>
+      <Grid md={3} onClick={handleLogoClick}>
+        <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
       </Grid>
       <Grid md={6}>
         <TextField
@@ -165,7 +182,7 @@ const Header = () => {
             margin={"0 20px"}
             style={{ cursor: "pointer" }}
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               setOpenNotification(!openNotification);
             }}
           >
@@ -180,16 +197,13 @@ const Header = () => {
                   color: "white",
                   padding: "0 5px",
                   borderRadius: "10px",
-                }} 
+                }}
               >
                 <Typography fontSize={"10px"}>{notificationNumber}</Typography>
               </Grid>
             )}
 
-            <NotificationsIcon
-              style={{ color: primary, fontSize: "30px" }}
-              
-            />
+            <NotificationsIcon style={{ color: primary, fontSize: "30px" }} />
           </Grid>
           <Grid>
             <Button
@@ -202,8 +216,14 @@ const Header = () => {
             </Button>
           </Grid>
           {openNotification && (
-            <Grid style={{ position: "absolute", top: 40, left: 0, right: 0 }} ref={notificationRef}>
-              <NotificationBox notification={notification} setOpenNotification={setOpenNotification}/>
+            <Grid
+              style={{ position: "absolute", top: 40, left: 0, right: 0 }}
+              ref={notificationRef}
+            >
+              <NotificationBox
+                notification={notification}
+                setOpenNotification={setOpenNotification}
+              />
             </Grid>
           )}
         </Grid>

@@ -2,7 +2,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const ALL_QUESTIONS_API = "http://localhost:8080/all/questions";
-export const ALL_FILTER_QUESTIONS_API = "http://localhost:8080/filter/all/questions";
 export const QUESTION_API = "http://localhost:8080/question/";
 export const LOGIN_API = "http://localhost:8080/api/v1/auth/authenticate";
 export const ANSWER_API = "http://localhost:8080/add/answer/";
@@ -82,11 +81,13 @@ export const fetchQuestion = async ({ questionId }) => {
   });
 };
 
-export const fetchQuestionList = async ({ searchTerm }) => {
+export const fetchQuestionList = async ({ searchTerm, userId, filters }) => {
   return new Promise((resolve, reject) => {
     axios
       .post(ALL_QUESTIONS_API, {
         searchTerm: searchTerm,
+        userId: userId,
+        filters: filters
       })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
@@ -98,29 +99,6 @@ export const fetchLoggedInUser = async ({ userId }) => {
     axios
       .get(FETCH_LOGGED_IN_USER_API + `?userId=${userId}`)
       .then((response) => resolve(response))
-      .catch((error) => reject(error));
-  });
-};
-
-export const fetchFilteredQuestionList = async ({ questionId, userId, filters }) => {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(
-        ALL_FILTER_QUESTIONS_API,
-        {
-          questionId: questionId,
-          userId: userId,
-          filters: filters
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getTokenCookie()}`,
-          },
-        }
-      )
-      .then((response) => {
-        return resolve(response)
-      })
       .catch((error) => reject(error));
   });
 };

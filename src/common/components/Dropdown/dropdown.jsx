@@ -2,12 +2,36 @@ import { Box, Typography, Grid } from "@mui/material";
 import React, { useState } from "react";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { fetchFilteredQuestionListAction } from "../../actions/actions";
-import { getLoggedInUserId } from "../../assets/constant/constants";
+import { setFilterAction } from "../../actions/actions";
+import { useSelector } from "react-redux";
+import { buildParams, isUserAuthenticated } from "../../utils/utils";
+import { useLocation, useNavigate } from "react-router-dom";
 const Dropdown = (props) => {
   const primary = "#0275FF";
   const hoverColor = "#80C4FF";
   const [isOpen, setIsOpen] = useState(true);
+
+  const navigate = useNavigate();
+
+  const filter = useSelector((state) => state?.filter?.filter) || null;
+  const value = useSelector((state) => state?.filter?.filter?.value) || "";
+
+  const handleFilterClick = (option) => {
+    if (isUserAuthenticated()) {
+      if(filter.value === option){
+        filter.value = "";
+      } else{
+        filter.value = option;
+      }
+      
+      props.dispatch(setFilterAction(filter));
+      const newUrl = `${window.location.pathname}?${buildParams(filter)}`;
+      window.history.pushState({}, "", newUrl);
+
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <Grid
@@ -55,8 +79,14 @@ const Dropdown = (props) => {
           borderRadius={"10px"}
         >
           {props.options.map((option) => (
-            <Box bgcolor={"white"} width={"100%"} borderRadius={"10px"} overflow={"hidden"}
-            onClick={() => props.dispatch(fetchFilteredQuestionListAction({userId : getLoggedInUserId(), filters : [`${option}`]}))}>
+            <Box
+              bgcolor={value === option ? hoverColor : "white"}
+              color={value === option ? "white" : "black"}
+              width={"100%"}
+              borderRadius={"10px"}
+              overflow={"hidden"}
+              onClick={() => handleFilterClick(option)}
+            >
               <Typography
                 fontSize={"14px"}
                 align="left"
@@ -64,7 +94,7 @@ const Dropdown = (props) => {
                 sx={{
                   "&:hover": {
                     bgcolor: hoverColor,
-                    color: "white"
+                    color: "white",
                   },
                 }}
                 padding={"8px 16px"}

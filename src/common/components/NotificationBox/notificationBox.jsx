@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteNotificationsAction } from "../../actions/actions";
+import { deleteNotificationsAction, fetchQuestionAction } from "../../actions/actions";
 import { useNavigate } from "react-router-dom";
 
 const NotificationBox = (props) => {
@@ -10,21 +10,21 @@ const NotificationBox = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const limitComment = (comment) => {
-    comment = comment.replaceAll("%", " ");
-    const words = comment.split(" ");
+  const limitValue = (value) => {
+    value = value.replaceAll("%", " ");
+    const words = value.split(" ");
     if (words.length > MAX_WORDS) {
       return words.slice(0, MAX_WORDS).join(" ") + " ...";
     }
-    return comment;
+    return value;
   };
 
-  const vote = (count, voteType) => {
+  const vote = (countUpvote, countDownVote, questionDescription, questionId) => {
     return (
       <Grid
         bgcolor={"white"}
-        m={"5px 0"}
-        border={"1px solid black"}
+        m={"8px 0"}
+        boxShadow={"0px 2px 6px rgba(0, 0, 0, 0.2)"}
         padding={1}
         sx={{
           "&:hover": {
@@ -33,10 +33,27 @@ const NotificationBox = (props) => {
           },
           borderRadius: "5px",
         }}
+        onClick={() => {
+          props.setOpenNotification(false);
+          const pathName = window.location.pathname;
+          if(pathName === "/") {
+            navigate(`/${questionId}`)
+          } else {
+            dispatch(fetchQuestionAction({ questionId }));
+          }
+        }}
       >
-        <Typography style={{ textAlign: "left" }}>
-          <Typography style={{ display: "inline" }}>{count}</Typography> People{" "}
-          {voteType} your question
+        <Typography sx={{ fontWeight: "bold", textAlign: "left" }}>{countUpvote? `${countUpvote} ${countUpvote === 1? "person" : "people"} upvoted` : ""} 
+        {" "}{countDownVote? `${countDownVote} ${countDownVote === 1? "person" : "people"} downvoted` : ""}{" "}
+        <Typography sx={{ display: "inline", textAlign: "left" }}>
+        your question
+        {" "}{" "}
+          <Typography
+            sx={{ display: "inline", fontWeight: "bold", textAlign: "left" }}
+          >
+            your question {limitValue(questionDescription)}
+          </Typography>
+        </Typography>
         </Typography>
       </Grid>
     );
@@ -47,7 +64,7 @@ const NotificationBox = (props) => {
       <Grid
         bgcolor={"white"}
         m={"5px 0"}
-        border={"1px solid black"}
+        boxShadow={"0px 2px 6px rgba(0, 0, 0, 0.2)"}
         textAlign={"left"}
         padding={1}
         sx={{
@@ -59,31 +76,37 @@ const NotificationBox = (props) => {
         }}
         onClick={() => {
           props.setOpenNotification(false);
-          navigate(`/${questionId}`);
+          const pathName = window.location.pathname;
+          if(pathName === "/") {
+            navigate(`/${questionId}`)
+          } else {
+            dispatch(fetchQuestionAction({ questionId }));
+          }
         }}
       >
-        <span style={{ fontWeight: "bold" }}>{name}</span>
-        <span style={{ display: "inline", textAlign: "left" }}>
+        <Typography style={{ fontWeight: "bold" }}>{name}
+        <Typography style={{ display: "inline", textAlign: "left" }}>
           {" "}
           commented on your question{" "}
-          <span
+          <Typography
             style={{ display: "inline", fontWeight: "bold", textAlign: "left" }}
           >
-            {limitComment(comment)}
-          </span>
-        </span>
+            {limitValue(comment)}
+          </Typography>
+        </Typography>
+        </Typography>
       </Grid>
     );
   };
   const notification = props.notification;
   const notificationItems = [];
 
-  if (notification && notification.upvoteCount > 0) {
-    notificationItems.push(vote(notification.upvoteCount, "upvoted"));
-  }
-
-  if (notification && notification.downvoteCount > 0) {
-    notificationItems.push(vote(notification.downvoteCount, "downvoted"));
+  if (notification && notification.notificationVotes.length > 0) {
+    notification.notificationVotes.forEach((e) => {
+      if(e.upvotedUsers.length > 0 || e.downvotedUsers.length > 0) {
+        notificationItems.push(vote(e.upvotedUsers.length, e.downvotedUsers.length, e.questionDescription, e.questionId));
+      }
+    });
   }
 
   if (notification && notification.notificationComments.length > 0) {
@@ -99,7 +122,6 @@ const NotificationBox = (props) => {
           style={{
             cursor: "pointer",
             color: primary,
-            textDecoration: "underLine",
           }}
           onClick={() =>
             dispatch(deleteNotificationsAction(notification.userId))
@@ -121,9 +143,10 @@ const NotificationBox = (props) => {
   return (
     <Grid
       bgcolor={"white"}
+      boxShadow={"0px 2px 6px rgba(0, 0, 0, 0.4)"}
       width={"90%"}
       p={1}
-      border={"1px solid gray"}
+      borderRadius={"5px"}
       maxHeight={"300px"}
       overflow={"scroll"}
     >
