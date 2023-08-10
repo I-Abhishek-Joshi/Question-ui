@@ -16,6 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import Error from "../Error/error";
 
 const Details = () => {
   const { questionId } = useParams();
@@ -83,6 +84,9 @@ const Details = () => {
   useEffect(() => {
     fetchQuestion();
   }, []);
+  if(!question) {
+    return <Error/>
+  }
   return (
     <Grid
       container

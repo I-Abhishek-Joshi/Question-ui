@@ -12,6 +12,10 @@ const initialState = {
         };
       case "FETCH_QUESTION_LIST_FAILURE": 
       case "FETCH_FILTERED_QUESTION_LIST_FAILURE":
+        return {
+          ...state,
+          questionList: []
+        }
       default:
         return state;
     }

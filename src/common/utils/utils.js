@@ -28,8 +28,6 @@ export const buildParams = (filters) => {
       }
     });
 
-    console.log(newParams.toString())
-  
     return newParams.toString();
   };
   

@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import Login from "./common/Pages/Login/login";
 import Register from "./common/Pages/Register/register";
 import { isUserAuthenticated } from "./common/utils/utils";
+import NoContent from "./common/Pages/NoContent/noContent";
+import NoPage from "./common/Pages/NoPage/noPage";
 
 function App() {
   const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen)
@@ -31,6 +33,7 @@ function App() {
         <Route path="/:questionId" element={isUserAuthenticated() ? <Details /> : <Navigate to="/login"/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NoPage/>}/>
       </Routes>
 
       <Footer />

@@ -14,6 +14,7 @@ import {
 } from "../../actions/actions";
 import { getLoggedInUserId } from "../../assets/constant/constants";
 import { useLocation, useSearchParams } from "react-router-dom";
+import NoContent from "../../Pages/NoContent/noContent";
 
 const CardDetailWrapper = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,9 @@ const CardDetailWrapper = () => {
       dispatch(openLoginModal());
     }
   };
-  return (
+
+  
+  return (questionList.length === 0)? <NoContent/> : (
     <Grid
       container
       display={"flex"}
