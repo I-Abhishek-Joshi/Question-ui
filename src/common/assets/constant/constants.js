@@ -76,8 +76,14 @@ export const fetchQuestion = async ({ questionId }) => {
           Authorization: `Bearer ${getTokenCookie()}`,
         },
       })
-      .then((response) => resolve(response))
-      .catch((error) => reject(error));
+      .then((response) => {
+        resolve(response);
+        console.log("resolving success");
+      })
+      .catch((error) => {
+        reject(error);
+        console.log("resolving error");
+      });
   });
 };
 
@@ -87,10 +93,16 @@ export const fetchQuestionList = async ({ searchTerm, userId, filters }) => {
       .post(ALL_QUESTIONS_API, {
         searchTerm: searchTerm,
         userId: userId,
-        filters: filters
+        filters: filters,
       })
-      .then((response) => resolve(response))
-      .catch((error) => reject(error));
+      .then((response) => {
+        resolve(response);
+        console.log("resolving success list");
+      })
+      .catch((error) => {
+        reject(error);
+        console.log("resolving error list");
+      });
   });
 };
 
@@ -103,31 +115,31 @@ export const fetchLoggedInUser = async ({ userId }) => {
   });
 };
 
-export const fetchNotifications = async({ userId }) => {
+export const fetchNotifications = async ({ userId }) => {
   return new Promise((resolve, reject) => {
     axios
       .get(FETCH_NOTIFICATION + `?userId=${userId}`, {
         headers: {
           Authorization: `Bearer ${getTokenCookie()}`,
-        }
+        },
       })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
-  })
-}
+  });
+};
 
-export const deleteNotifications = async({ userId }) => {
+export const deleteNotifications = async ({ userId }) => {
   return new Promise((resolve, reject) => {
     axios
       .delete(FETCH_NOTIFICATION, {
         data: {
-          userId: userId
+          userId: userId,
         },
         headers: {
           Authorization: `Bearer ${getTokenCookie()}`,
-        }
+        },
       })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
-  })
-}
+  });
+};

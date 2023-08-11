@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Typography,
-  Grid,
-  Avatar,
-  Chip,
-  Box,
-} from "@mui/material";
+import { Card, Typography, Grid, Avatar, Chip, Box } from "@mui/material";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import face from "../../assets/images/face.jpg";
@@ -17,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { isUserAuthenticated } from "../../utils/utils";
 import { useDispatch } from "react-redux";
 import { currentLocation, openLoginModal } from "../../actions/actions";
-import '../../../App.css'
+import "../../../App.css";
 import { getLoggedInUserId } from "../../assets/constant/constants";
 
 const CardDetails = ({ question }) => {
@@ -28,18 +21,18 @@ const CardDetails = ({ question }) => {
   const defaultColor = "#848484";
   const danger = "#DC4C64";
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleQuestionTitleClick = () => {
-    if(isUserAuthenticated()) {
-      navigate(`/${question.questionId}`)
-    } else{
-      dispatch(currentLocation(`${question.questionId}`))
-      dispatch(openLoginModal())
-      document.body.classList.add('bodyNoScroll')
+    if (isUserAuthenticated()) {
+      navigate(`/${question.questionId}`);
+    } else {
+      dispatch(currentLocation(`${question.questionId}`));
+      dispatch(openLoginModal());
+      document.body.classList.add("bodyNoScroll");
     }
-  }
+  };
 
   return (
     <Grid
@@ -133,24 +126,24 @@ const CardDetails = ({ question }) => {
       >
         {/* Block 4 */}
         <Grid style={{ maxHeight: "200px", overflow: "hidden" }} width={"100%"}>
-          <Box display={"flex"} justifyContent={"space-between"} >
-              <Typography
-                variant="h6"
-                fontWeight={700}
-                lineHeight={1.4}
-                style={{
-                  textAlign: "left",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  cursor: "pointer",
-                  maxWidth: '80%',
-                }}
-                whiteSpace={"nowrap"}
-                fontSize={"14px"}
-                onClick={ handleQuestionTitleClick }
-              >
-                {question.questionTitle} 
-              </Typography>
+          <Box display={"flex"} justifyContent={"space-between"}>
+            <Typography
+              variant="h6"
+              fontWeight={700}
+              lineHeight={1.4}
+              style={{
+                textAlign: "left",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                cursor: "pointer",
+                maxWidth: "80%",
+              }}
+              whiteSpace={"nowrap"}
+              fontSize={"14px"}
+              onClick={handleQuestionTitleClick}
+            >
+              {question.questionTitle}
+            </Typography>
             <Box display={"flex"} alignItems={"center"}>
               <AccessTimeIcon style={{ fontSize: "15px" }} />
               <Typography fontSize={"12px"} ml={0.5} fontWeight={600}>
@@ -189,7 +182,14 @@ const CardDetails = ({ question }) => {
         <Box display="flex" justifyContent="space-between" pt={2} pb={2}>
           <Box display="flex" alignItems="center">
             <ArrowUpwardIcon
-              style={{ color: isUserAuthenticated() && question?.upvotedUsers?.includes(getLoggedInUserId())? success : defaultColor, fontSize: "18px" }}
+              style={{
+                color:
+                  isUserAuthenticated() &&
+                  question?.upvotedUsers?.includes(getLoggedInUserId())
+                    ? success
+                    : defaultColor,
+                fontSize: "18px",
+              }}
             />
             <Typography
               variant="body1"
@@ -201,7 +201,14 @@ const CardDetails = ({ question }) => {
               {question.upvotes}
             </Typography>
             <ArrowDownwardIcon
-              style={{ color: isUserAuthenticated() && question?.downvotedUsers?.includes(getLoggedInUserId())? danger : defaultColor, fontSize: "18px" }}
+              style={{
+                color:
+                  isUserAuthenticated() &&
+                  question?.downvotedUsers?.includes(getLoggedInUserId())
+                    ? danger
+                    : defaultColor,
+                fontSize: "18px",
+              }}
             />
             <Typography
               variant="body1"

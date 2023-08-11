@@ -1,4 +1,11 @@
-import { deleteNotifications, fetchLoggedInUser, fetchNotifications, fetchQuestion, fetchQuestionList, updateQuestionApi } from "../assets/constant/constants";
+import {
+  deleteNotifications,
+  fetchLoggedInUser,
+  fetchNotifications,
+  fetchQuestion,
+  fetchQuestionList,
+  updateQuestionApi,
+} from "../assets/constant/constants";
 
 export const openLoginModal = () => {
   return {
@@ -40,6 +47,9 @@ export const fetchQuestionAction = (payload) => {
     try {
       const response = await fetchQuestion(payload);
       dispatch({
+        type: "TOGGLE_DETAILS_LOADER",
+      });
+      dispatch({
         type: "FETCH_QUESTION_SUCCESS",
         payload: response.data,
       });
@@ -54,10 +64,19 @@ export const fetchQuestionAction = (payload) => {
 export const fetchQuestionListAction = (payload) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: "TOGGLE_LIST_LOADER",
+        payload: true,
+      });
       const response = await fetchQuestionList(payload);
+      console.log("dispatching logger");
+      dispatch({
+        type: "TOGGLE_LIST_LOADER",
+        payload: false,
+      });
       dispatch({
         type: "FETCH_QUESTION_LIST_SUCCESS",
-        payload: response.data
+        payload: response.data,
       });
     } catch {
       dispatch({
@@ -74,14 +93,13 @@ export const setFilterAction = (payload) => {
   };
 };
 
-
 export const fetchLoggedInUserAction = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetchLoggedInUser({userId});
+      const response = await fetchLoggedInUser({ userId });
       dispatch({
         type: "FETCH_LOGGED_IN_USER_SUCCESS",
-        payload: response.data
+        payload: response.data,
       });
     } catch {
       dispatch({
@@ -93,17 +111,17 @@ export const fetchLoggedInUserAction = (userId) => {
 
 export const removeLoggedInUser = () => {
   return {
-    type: "REMOVE_LOGGED_IN_USER"
-  }
-}
+    type: "REMOVE_LOGGED_IN_USER",
+  };
+};
 
 export const fetchNotificationsAction = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetchNotifications({userId});
+      const response = await fetchNotifications({ userId });
       dispatch({
         type: "FETCH_NOTIFICATIONS_SUCCESS",
-        payload: response.data
+        payload: response.data,
       });
     } catch {
       dispatch({
@@ -116,7 +134,7 @@ export const fetchNotificationsAction = (userId) => {
 export const deleteNotificationsAction = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await deleteNotifications({userId});
+      const response = await deleteNotifications({ userId });
       dispatch({
         type: "DELETE_NOTIFICATIONS_SUCCESS",
       });

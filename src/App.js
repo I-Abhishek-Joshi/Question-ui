@@ -13,27 +13,33 @@ import Register from "./common/Pages/Register/register";
 import { isUserAuthenticated } from "./common/utils/utils";
 import NoContent from "./common/Pages/NoContent/noContent";
 import NoPage from "./common/Pages/NoPage/noPage";
+import ListLoader from "./common/Pages/ListLoader/listLoader";
 
 function App() {
-  const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen)
+  const isLoginModalOpen = useSelector((state) => state.modal.isLoginModalOpen);
   const location = useLocation();
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/register";
   return (
     <div className={`App ${isAuthPage ? "auth" : "app"}`}>
-      {
-          isLoginModalOpen && (<Grid position={'fixed'} zIndex={'999'} width={'100%'} height={'100%'}>
+      {isLoginModalOpen && (
+        <Grid position={"fixed"} zIndex={"999"} width={"100%"} height={"100%"}>
           <LoginModal />
-        </Grid>)
-      }
-      {
-        !isAuthPage && (<Header/>)
-      }
+        </Grid>
+      )}
+      {!isAuthPage && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:questionId" element={isUserAuthenticated() ? <Details /> : <Navigate to="/login"/>} />
+        <Route
+          path="/:questionId"
+          element={
+            isUserAuthenticated() ? <Details /> : <Navigate to="/login" />
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NoPage/>}/>
+        <Route path="/test" element={<ListLoader />} />
+        <Route path="*" element={<NoPage />} />
       </Routes>
 
       <Footer />
