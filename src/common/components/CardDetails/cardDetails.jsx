@@ -21,6 +21,7 @@ const CardDetails = ({ question }) => {
   const defaultColor = "#848484";
   const danger = "#DC4C64";
 
+  const chipColorList = [primary, success, orange]
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -58,39 +59,20 @@ const CardDetails = ({ question }) => {
       >
         {/* Block 2 */}
         <Grid container direction="row" flexWrap="nowrap" pl={2} pr={2} mt={1}>
-          <Chip
-            label="Database"
+          {
+            question.tags.map((tag, index) => (
+              <Chip
+              label={tag}
             size="small"
             style={{
-              color: primary,
+              color: chipColorList[index],
               backgroundColor: chipColor,
               padding: "0 20px",
               margin: "5px",
               fontSize: "10px",
-            }}
-          />
-          <Chip
-            label="Java"
-            size="small"
-            style={{
-              color: success,
-              backgroundColor: chipColor,
-              padding: "0 20px",
-              margin: "5px",
-              fontSize: "10px",
-            }}
-          />
-          <Chip
-            label="Spring Boot"
-            size="small"
-            style={{
-              color: orange,
-              backgroundColor: chipColor,
-              padding: "0 20px",
-              margin: "5px",
-              fontSize: "10px",
-            }}
-          />
+            }}/>
+            ))
+          }
         </Grid>
       </Grid>
       <Grid

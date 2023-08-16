@@ -5,7 +5,7 @@ const ListLoader = () => {
   return (
     <Grid container columnSpacing={6} padding={"0 20px"}>
       <Grid item md={2.5}>
-        <Skeleton variant="rounded" height={"20rem"} />
+        <Skeleton animation="wave" variant="rounded" height={"20rem"} />
       </Grid>
       <Grid item md={7}>
         <Grid
@@ -23,17 +23,17 @@ const ListLoader = () => {
             display={"flex"}
             justifyContent={"flex-start"}
           >
-            <Skeleton variant="rounded" height={"38px"} width={"127px"} />
+            <Skeleton animation="wave" variant="rounded" height={"38px"} width={"127px"} />
           </Grid>
           {[1, 2, 3].map((question) => (
             <Grid item width={"100%"}>
-              <Skeleton variant="rounded" height={"12rem"} />
+              <Skeleton animation="wave" variant="rounded" height={"12rem"} />
             </Grid>
           ))}
         </Grid>
       </Grid>
       <Grid item md={2.5}>
-        <Skeleton variant="rounded" height={"40rem"} />
+        <Skeleton animation="wave" variant="rounded" height={"40rem"} />
       </Grid>
     </Grid>
   );

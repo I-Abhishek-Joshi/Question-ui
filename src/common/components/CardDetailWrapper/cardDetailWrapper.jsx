@@ -1,71 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import "../../../App.css"
 import CardDetails from "../CardDetails/cardDetails";
 import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
-import "../../../App.css";
 import { isUserAuthenticated } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentLocation,
-  fetchQuestionListAction,
   openLoginModal,
-  setFilterAction,
 } from "../../actions/actions";
-import { getLoggedInUserId } from "../../assets/constant/constants";
-import { useLocation, useSearchParams } from "react-router-dom";
 import NoContent from "../../Pages/NoContent/noContent";
-import ListLoader from "../../Pages/ListLoader/listLoader";
 
 const CardDetailWrapper = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const questionList =
     useSelector((state) => state?.questionList?.questionList) || [];
-
-  // const filter = useSelector((state) => state?.filter?.filter) || {};
-  // const value = useSelector((state) => state?.filter?.filter?.value) || "";
-  // const searchTerm =
-  //   useSelector((state) => state?.filter?.filter?.searchTerm) || "";
-  // const [initialLoad, setInitialLoad] = useState(true);
-
-  // const queryParams = new URLSearchParams(location.search);
-  // const searchTermURL = queryParams.get("searchTerm") || "";
-  // const valueURL = queryParams.get("value") || "";
 
   const toggleScroll = () => {
     document.body.classList.toggle("bodyNoScroll");
   };
-  // useEffect(() => {
-  //   if (initialLoad) {
-  //     dispatch(setFilterAction({ searchTerm: searchTermURL, value: valueURL }));
-  //   }
-  //   const fetchData = () => {
-  //     dispatch(
-  //       fetchQuestionListAction({
-  //         searchTerm: initialLoad ? searchTermURL : filter?.searchTerm || "",
-  //         userId: getLoggedInUserId(),
-  //         filters: initialLoad
-  //           ? valueURL.length > 0
-  //             ? [valueURL]
-  //             : []
-  //           : filter?.value?.length > 0
-  //           ? [filter?.value]
-  //           : [],
-  //       })
-  //     ).then(() => {
-  //       setInitialLoad(false);
-  //     });
-  //   };
-  //   fetchData();
-  // }, [searchTerm, value]);
-
   const primary = "#0275FF";
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCreatePost = () => {
+    toggleScroll();
     if (isUserAuthenticated()) {
-      toggleScroll();
       setIsOpen(true);
     } else {
       dispatch(currentLocation("/"));
@@ -73,18 +33,8 @@ const CardDetailWrapper = () => {
     }
   };
 
-  return questionList.length === 0 ? (
-    <NoContent />
-  ) : (
-    <Grid
-      container
-      display={"flex"}
-      flexDirection={"column"}
-      justifyContent={"center"}
-      alignItems={"flex-start"}
-      width={"100%"}
-      rowSpacing={3.5}
-    >
+  return (
+    <Grid>
       <Grid item width={"100%"} display={"flex"} justifyContent={"flex-start"}>
         <Button
           variant="contained"
@@ -101,13 +51,31 @@ const CardDetailWrapper = () => {
           New Post
         </Button>
       </Grid>
-      {questionList &&
-        questionList.length > 0 &&
-        questionList.map((question) => (
-          <Grid item width={"100%"}>
-            <CardDetails question={question} />
-          </Grid>
-        ))}
+      {questionList.length === 0 && (
+        <Grid mt={2}>
+          <NoContent />
+        </Grid>
+      )}
+      {questionList.length !== 0 && (
+        <Grid
+          container
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"flex-start"}
+          width={"100%"}
+          rowSpacing={3.5}
+          mt={"0px"}
+        >
+          {questionList &&
+            questionList.length > 0 &&
+            questionList.map((question) => (
+              <Grid item width={"100%"}>
+                <CardDetails question={question} />
+              </Grid>
+            ))}
+        </Grid>
+      )}
       {isOpen && (
         <Box
           style={{ position: "absolute", left: 0, top: 0 }}
@@ -115,7 +83,7 @@ const CardDetailWrapper = () => {
           width={"100vw"}
           height={"100vh"}
         >
-          <CreatePostModal closeModal={setIsOpen} toggleScroll={toggleScroll} />
+          <CreatePostModal closeModal={setIsOpen} />
         </Box>
       )}
     </Grid>

@@ -9,7 +9,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import AppTagline from "../../components/AppTagline/appTagline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { REGISTER_API, setTokenCookie } from "../../assets/constant/constants";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { fetchLoggedInUserAction } from "../../actions/actions";
 
 const Register = () => {
   const textColor = "#636363";
@@ -17,22 +23,40 @@ const Register = () => {
   const dividerColor = "#dddddd";
   const primaryDisable = "#B2CFFF";
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleEyeClick = () => {
+    setShowPassword(!showPassword)
+  }
 
   const disableRegisterButton = () => {
-    return (
-      firstName.length === 0 || email.length === 0 || password.length < 8
-    );
+    return firstName.length === 0 || email.length === 0 || password.length < 8;
   };
+
 
   const callRegisterApi = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        // call registering api
+        axios.post(REGISTER_API, {
+            email: email,
+            password: password,
+            firstName: firstName,
+            lastName: lastName
+          })
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       }, 1500);
     });
   };
@@ -41,14 +65,18 @@ const Register = () => {
     setIsRegistering(true);
 
     callRegisterApi()
-      .then(() => {
-        console.log("Registration successful");
-        setIsRegistering(false);
+      .then((data) => {
+        dispatch(fetchLoggedInUserAction(data.userId))
+        setTokenCookie(data);
+        navigate("/");
       })
       .catch((error) => {
-        console.log("Registration failed: ", error);
-        setIsRegistering(false);
-      });
+        setEmail("");
+        setPassword("");
+        setFirstName("")
+        setLastName("")
+        
+      }).then(() => setIsRegistering(false));
   };
 
   return (
@@ -81,6 +109,7 @@ const Register = () => {
                 value={firstName}
                 disabled={isRegistering}
               />
+              <Typography style={{textAlign: "left", fontSize: "0.7rem", color: textColor, marginTop: "2px"}}>* Required</Typography>
             </Grid>
             <Grid margin={"15px 0"}>
               <TextField
@@ -109,6 +138,7 @@ const Register = () => {
                 value={email}
                 disabled={isRegistering}
               />
+              <Typography style={{textAlign: "left", fontSize: "0.7rem", color: textColor, marginTop: "2px"}}>* Required</Typography>
             </Grid>
             <Grid margin={"15px 0"}>
               <TextField
@@ -119,11 +149,35 @@ const Register = () => {
                     color: textColor,
                   },
                 }}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      {!showPassword && (
+                        <VisibilityIcon
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={ handleEyeClick }
+                        />
+                      )}
+
+                      {showPassword && (
+                        <VisibilityOffIcon
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={ handleEyeClick }
+                        />
+                      )}
+                    </>
+                  ),
+                }}
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 disabled={isRegistering}
-                type="password"
+                type= {showPassword? "text" : "password"}
               />
+              <Typography style={{textAlign: "left", fontSize: "0.7rem", color: textColor, marginTop: "2px"}}>* Required minimum 8 characters</Typography>
             </Grid>
             <Box margin={"15px 0"}>
               <Button

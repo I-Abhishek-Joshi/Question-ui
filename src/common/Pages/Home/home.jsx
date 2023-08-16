@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Profile from "../../components/Profile/profile";
 import CardDetailWrapper from "../../components/CardDetailWrapper/cardDetailWrapper";
@@ -10,7 +10,6 @@ import {
   setFilterAction,
 } from "../../actions/actions";
 import {
-  fetchQuestionList,
   getLoggedInUserId,
 } from "../../assets/constant/constants";
 import ListLoader from "../ListLoader/listLoader";
@@ -34,10 +33,7 @@ const Home = () => {
   const listLoader = useSelector((state) => state?.loader?.listLoader);
 
   useEffect(() => {
-    console.log("hi from home.jsx");
-    if (initialLoad) {
-      dispatch(setFilterAction({ searchTerm: searchTermURL, value: valueURL }));
-    }
+    
     const fetchData = () => {
       dispatch(
         fetchQuestionListAction({
@@ -55,8 +51,17 @@ const Home = () => {
         setInitialLoad(false);
       });
     };
-    fetchData();
-  }, [searchTerm, value]);
+
+    if (initialLoad) {
+      setInitialLoad(false);
+      dispatch(setFilterAction({ searchTerm: searchTermURL, value: valueURL }));
+    } else {
+      fetchData();
+    }
+
+
+    
+  }, [searchTerm, value, initialLoad]);
 
   return listLoader ? (
     <ListLoader />

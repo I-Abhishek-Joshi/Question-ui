@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import Error from "../Error/error";
+import DetailsLoader from "../DetailsLoader/detailsLoader";
 
 const Details = () => {
   const { questionId } = useParams();
@@ -28,6 +29,9 @@ const Details = () => {
 
   const [answer, setAnswer] = useState("");
   const [isPostingAnswer, setIsPostingAnswer] = useState(false);
+  const [triggerFetchQuestion, setTriggerFetchQuestion] = useState(false)
+
+  const detailsLoader = useSelector((state) => state?.loader?.detailsLoader);
 
   const question = useSelector((state) => state.question?.questionDetail);
   const favourite = question?.favouriteAddedUsers?.includes(
@@ -66,6 +70,11 @@ const Details = () => {
         })
         .catch((error) => {
           reject(error);
+        })
+        .then(() => {
+          setTriggerFetchQuestion(!triggerFetchQuestion);
+          setAnswer("")
+          setIsPostingAnswer(false)
         });
     });
   };
@@ -74,7 +83,7 @@ const Details = () => {
     setIsPostingAnswer(true);
     postAnswerApi()
       .then((data) => {
-        refresh();
+        // refresh();
       })
       .catch((error) => {
         console.log("error", error);
@@ -83,11 +92,11 @@ const Details = () => {
 
   useEffect(() => {
     fetchQuestion();
-  }, []);
+  }, [triggerFetchQuestion]);
   if(!question) {
     return <Error/>
   }
-  return (
+  return detailsLoader? (<DetailsLoader/>) : (
     <Grid
       container
       bgcolor={"white"}
@@ -143,6 +152,7 @@ const Details = () => {
       </Grid>
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <UserResponse
+        questionTitle={question.questionTitle}
         upvotes={question.upvotes}
         downvotes={question.downvotes}
         responseData={question?.questionDescription?.replace(/%n%/g, "\n")}
@@ -151,8 +161,9 @@ const Details = () => {
         tags={question.tags}
         type={"question"}
         userId={question.userId}
-        refresh={refresh}
         questionId={question.questionId}
+        triggerFetchQuestion={triggerFetchQuestion}
+        setTriggerFetchQuestion={setTriggerFetchQuestion}
       />
       <Divider style={{ backgroundColor: "gray" }}></Divider>
       <Grid margin={"10px 0"}>
@@ -174,9 +185,10 @@ const Details = () => {
               userName={answer.userName}
               type={"answer"}
               userId={answer.userId}
-              refresh={refresh}
               answerId={answer.answerId}
               questionId={question.questionId}
+              triggerFetchQuestion={triggerFetchQuestion}
+              setTriggerFetchQuestion={setTriggerFetchQuestion}
             />
             <Divider style={{ backgroundColor: "gray" }}></Divider>
           </>

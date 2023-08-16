@@ -1,7 +1,7 @@
 const initialState = {
   filter: {
-    searchTerm: null,
-    value: null,
+    searchTerm: "",
+    value: "",
   },
 };
 

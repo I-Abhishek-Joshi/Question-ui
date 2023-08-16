@@ -29,10 +29,18 @@ export const currentLocation = (location) => {
 export const updateQuestionAction = (payload) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: "TOGGLE_DETAILS_LOADER",
+        payload: true
+      });
       const response = await updateQuestionApi(payload);
       dispatch({
         type: "UPDATE_QUESTION_SUCCESS",
         payload: response.data,
+      });
+      dispatch({
+        type: "TOGGLE_DETAILS_LOADER",
+        payload: false
       });
     } catch (error) {
       dispatch({
@@ -45,9 +53,14 @@ export const updateQuestionAction = (payload) => {
 export const fetchQuestionAction = (payload) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: "TOGGLE_DETAILS_LOADER",
+        payload: true
+      });
       const response = await fetchQuestion(payload);
       dispatch({
         type: "TOGGLE_DETAILS_LOADER",
+        payload: false
       });
       dispatch({
         type: "FETCH_QUESTION_SUCCESS",
@@ -69,7 +82,6 @@ export const fetchQuestionListAction = (payload) => {
         payload: true,
       });
       const response = await fetchQuestionList(payload);
-      console.log("dispatching logger");
       dispatch({
         type: "TOGGLE_LIST_LOADER",
         payload: false,

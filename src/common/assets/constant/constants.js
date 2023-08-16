@@ -4,12 +4,15 @@ import Cookies from "js-cookie";
 export const ALL_QUESTIONS_API = "http://localhost:8080/all/questions";
 export const QUESTION_API = "http://localhost:8080/question/";
 export const LOGIN_API = "http://localhost:8080/api/v1/auth/authenticate";
+export const REGISTER_API = "http://localhost:8080/api/v1/auth/register";
 export const ANSWER_API = "http://localhost:8080/add/answer/";
 export const DELETE_ANSWER_API = "http://localhost:8080/delete/answer";
 export const ADD_QUESTION_API = "http://localhost:8080/add/question";
 export const UPDATE_QUESTION_API = "http://localhost:8080/update/question";
 export const FETCH_LOGGED_IN_USER_API = "http://localhost:8080/user";
 export const FETCH_NOTIFICATION = "http://localhost:8080/notification";
+export const DELETE_QUESTION_API = "http://localhost:8080/delete/question/"
+
 
 export const setTokenCookie = (data) => {
   const expirationDate = new Date();
@@ -37,6 +40,9 @@ export const updateQuestionApi = ({
   userId,
   voteType,
   favourite,
+  tagList,
+  questionTitle,
+  questionDescription
 }) => {
   return new Promise((resolve, reject) => {
     axios
@@ -47,6 +53,9 @@ export const updateQuestionApi = ({
           userId: userId,
           voteType: voteType,
           favourite: favourite,
+          tagList: tagList,
+          questionTitle: questionTitle,
+          questionDescription: questionDescription
         },
         {
           headers: {
@@ -78,11 +87,9 @@ export const fetchQuestion = async ({ questionId }) => {
       })
       .then((response) => {
         resolve(response);
-        console.log("resolving success");
       })
       .catch((error) => {
         reject(error);
-        console.log("resolving error");
       });
   });
 };
@@ -97,11 +104,9 @@ export const fetchQuestionList = async ({ searchTerm, userId, filters }) => {
       })
       .then((response) => {
         resolve(response);
-        console.log("resolving success list");
       })
       .catch((error) => {
         reject(error);
-        console.log("resolving error list");
       });
   });
 };
