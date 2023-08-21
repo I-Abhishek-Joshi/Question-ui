@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import "../../../App.css"
+import "../../../App.css";
 import CardDetails from "../CardDetails/cardDetails";
 import { Box, Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePostModal from "../CreatePostModal/createPostModal";
 import { isUserAuthenticated } from "../../utils/utils";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentLocation,
-  openLoginModal,
-} from "../../actions/actions";
+import { currentLocation, openLoginModal } from "../../actions/actions";
 import NoContent from "../../Pages/NoContent/noContent";
 
 const CardDetailWrapper = () => {
