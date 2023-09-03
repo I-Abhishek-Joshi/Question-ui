@@ -1,6 +1,5 @@
 import React from "react";
-import { Typography, Button, Grid, Divider } from "@mui/material";
-import logo from "../../assets/images/logo.jpg";
+import { Button, Grid, Divider } from "@mui/material";
 import LoginInputs from "../../components/LoginInputs/loginInputs";
 import AppTagline from "../../components/AppTagline/appTagline";
 import { Link } from "react-router-dom";

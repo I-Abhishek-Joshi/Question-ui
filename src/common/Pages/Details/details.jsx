@@ -38,9 +38,6 @@ const Details = () => {
     getLoggedInUserId()
   );
 
-  const refresh = () => {
-    window.location.reload();
-  };
   const fetchQuestion = async () => {
     dispatch(fetchQuestionAction({ questionId }));
   };
@@ -92,6 +89,7 @@ const Details = () => {
 
   useEffect(() => {
     fetchQuestion();
+    // eslint-disable-next-line
   }, [triggerFetchQuestion]);
   if(!question) {
     return <Error/>

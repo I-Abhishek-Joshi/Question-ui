@@ -1,74 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Box,
-  Button,
-  CircularProgress,
   Grid,
-  TextField,
   Typography,
 } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "../../../App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeLoginModal } from "../../actions/actions";
-import axios from "axios";
-import { LOGIN_API, setTokenCookie } from "../../assets/constant/constants";
-import { useNavigate } from "react-router-dom";
 import LoginInputs from "../LoginInputs/loginInputs";
 
 const LoginModal = () => {
   const dispatch = useDispatch();
   const primary = "#0275FF";
   const textColor = "#636363";
-  const primaryDisable = "#B2CFFF";
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  const navigate = useNavigate();
-  const currentLocation = useSelector((state) => state.location.currentLocation);
-
-  const disableLoginButton = () => {
-    return email.length === 0 || password.length === 0;
-  };
-
-  const callLoginApi = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        axios
-          .post(LOGIN_API, {
-            email: email,
-            password: password,
-          })
-          .then((response) => {
-            resolve(response.data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      }, 1500);
-    });
-  };
-
-  const handleLoginCLick = () => {
-    setIsLoggingIn(true);
-
-    callLoginApi()
-      .then((data) => {
-        setTokenCookie(data);
-        dispatch(closeLoginModal());
-        navigate(currentLocation);
-        document.body.classList.remove("bodyNoScroll");
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setEmail("");
-        setPassword("");
-        setIsLoggingIn(false);
-      });
-  };
 
   return (
     <Grid
@@ -104,7 +49,6 @@ const LoginModal = () => {
               borderRadius: "50%",
             }}
           />
-          {!isLoggingIn && (
             <CloseOutlinedIcon
               style={{
                 position: "absolute",
@@ -119,7 +63,6 @@ const LoginModal = () => {
                 document.body.classList.remove("bodyNoScroll");
               }}
             />
-          )}
         </Grid>
         <Grid marginTop={"30px"}>
           <Typography fontSize={"30px"} color={textColor}>

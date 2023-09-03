@@ -12,7 +12,7 @@ const AppTagline = () => {
           width={"80%"}
         >
           <Grid justifyContent={"flex-start"} display={"flex"} width={"100%"}>
-            <img src={logo} style={{ cursor: "pointer", height: '60px' }}></img>
+            <img src={logo} alt="logo" style={{ cursor: "pointer", height: '60px' }}></img>
           </Grid>
           <Grid>
             <Typography fontFamily={"Helvetica Neue, Arial, sans-sarif"} fontWeight={500} fontSize={'25px'} textAlign={"left"}>

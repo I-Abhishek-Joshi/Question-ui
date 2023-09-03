@@ -13,7 +13,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { updateQuestionAction } from "../../actions/actions";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const CreatePostModal = (props) => {
 
@@ -215,7 +214,7 @@ const CreatePostModal = (props) => {
                   ? ""
                   : `Add ${3 - tagList.length} ${
                       tagList.length ? "more " : ""
-                    }filter${tagList.length == 2 ? "" : "s"}`
+                    }filter${tagList.length === 2 ? "" : "s"}`
               }
               multiline
               rows={1}

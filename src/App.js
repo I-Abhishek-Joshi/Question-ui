@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import Header from "./common/components/Header/header";
 import Footer from "./common/components/Footer/footer";
@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import Login from "./common/Pages/Login/login";
 import Register from "./common/Pages/Register/register";
 import { isUserAuthenticated } from "./common/utils/utils";
-import NoContent from "./common/Pages/NoContent/noContent";
 import NoPage from "./common/Pages/NoPage/noPage";
 import ListLoader from "./common/Pages/ListLoader/listLoader";
 

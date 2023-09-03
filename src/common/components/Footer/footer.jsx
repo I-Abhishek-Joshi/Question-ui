@@ -17,6 +17,7 @@ const Footer = () => {
               <img
                 src={semiLogo}
                 height={"40px"}
+                alt="logo"
                 style={{ cursor: "pointer" }}
               />
 

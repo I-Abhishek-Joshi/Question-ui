@@ -34,7 +34,6 @@ const FilterTab = () => {
   const renderedItems = expanded ? items : items.slice(0, 5);
   const categoryHeaderColor = "#E7FCEE";
   const success = "#4BB543";
-  const primary = "#0000FF";
   const chipColor = "#4C67FD";
   return (
     <Grid

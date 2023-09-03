@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import noPage from "../../assets/images/404.png";
 const NoPage = () => {

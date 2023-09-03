@@ -1,17 +1,19 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export const ALL_QUESTIONS_API = "http://localhost:8080/all/questions";
-export const QUESTION_API = "http://localhost:8080/question/";
-export const LOGIN_API = "http://localhost:8080/api/v1/auth/authenticate";
-export const REGISTER_API = "http://localhost:8080/api/v1/auth/register";
-export const ANSWER_API = "http://localhost:8080/add/answer/";
-export const DELETE_ANSWER_API = "http://localhost:8080/delete/answer";
-export const ADD_QUESTION_API = "http://localhost:8080/add/question";
-export const UPDATE_QUESTION_API = "http://localhost:8080/update/question";
-export const FETCH_LOGGED_IN_USER_API = "http://localhost:8080/user";
-export const FETCH_NOTIFICATION = "http://localhost:8080/notification";
-export const DELETE_QUESTION_API = "http://localhost:8080/delete/question/"
+
+const URL = "https://question-bank-uzfm.onrender.com";
+export const ALL_QUESTIONS_API = URL + "/all/questions";
+export const QUESTION_API = URL + "/question/";
+export const LOGIN_API = URL + "/api/v1/auth/authenticate";
+export const REGISTER_API = URL + "/api/v1/auth/register";
+export const ANSWER_API = URL + "/add/answer/";
+export const DELETE_ANSWER_API = URL + "/delete/answer";
+export const ADD_QUESTION_API = URL + "/add/question";
+export const UPDATE_QUESTION_API = URL + "/update/question";
+export const FETCH_LOGGED_IN_USER_API = URL + "/user";
+export const FETCH_NOTIFICATION = URL + "/notification";
+export const DELETE_QUESTION_API = URL + "/delete/question/"
 
 
 export const setTokenCookie = (data) => {

@@ -11,7 +11,7 @@ import "../../../App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLoginModal, fetchLoggedInUserAction, fetchNotificationsAction } from "../../actions/actions";
 import axios from "axios";
-import { LOGIN_API, fetchLoggedInUser, setTokenCookie } from "../../assets/constant/constants";
+import { LOGIN_API, setTokenCookie } from "../../assets/constant/constants";
 import { useNavigate } from "react-router-dom";
 
 const LoginInputs = () => {

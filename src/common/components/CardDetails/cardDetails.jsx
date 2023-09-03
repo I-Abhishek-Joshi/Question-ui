@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography, Grid, Avatar, Chip, Box } from "@mui/material";
+import { Typography, Grid, Avatar, Chip, Box } from "@mui/material";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import face from "../../assets/images/face.jpg";

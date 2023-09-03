@@ -1,5 +1,4 @@
 import {
-  Box,
   Grid,
   TextField,
   Button,
@@ -10,7 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import logo from "../../assets/images/logo.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import { buildParams, isUserAuthenticated } from "../../utils/utils";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentLocation,
@@ -106,6 +105,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
+    // eslint-disable-next-line
   }, [notification?.notificationComments, notification?.notificationVotes, notificationNumber]);
 
   return (
@@ -122,7 +122,7 @@ const Header = () => {
       marginBottom={"32px"}
     >
       <Grid md={3} onClick={handleLogoClick}>
-        <img src={logo} height={"40px"} style={{ cursor: "pointer" }}></img>
+        <img src={logo}  alt="logo" height={"40px"} style={{ cursor: "pointer" }}></img>
       </Grid>
       <Grid md={6}>
         <TextField

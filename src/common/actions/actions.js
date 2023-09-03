@@ -1,5 +1,4 @@
 import {
-  deleteNotifications,
   fetchLoggedInUser,
   fetchNotifications,
   fetchQuestion,
@@ -146,7 +145,6 @@ export const fetchNotificationsAction = (userId) => {
 export const deleteNotificationsAction = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await deleteNotifications({ userId });
       dispatch({
         type: "DELETE_NOTIFICATIONS_SUCCESS",
       });

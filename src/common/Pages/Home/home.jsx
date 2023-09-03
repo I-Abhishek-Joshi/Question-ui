@@ -17,8 +17,6 @@ import ListLoader from "../ListLoader/listLoader";
 const Home = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const questionList =
-    useSelector((state) => state?.questionList?.questionList) || [];
 
   const filter = useSelector((state) => state?.filter?.filter) || {};
   const value = useSelector((state) => state?.filter?.filter?.value) || "";
@@ -58,9 +56,7 @@ const Home = () => {
     } else {
       fetchData();
     }
-
-
-    
+    // eslint-disable-next-line
   }, [searchTerm, value, initialLoad]);
 
   return listLoader ? (

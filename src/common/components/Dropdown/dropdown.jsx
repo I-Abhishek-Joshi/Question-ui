@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { setFilterAction } from "../../actions/actions";
 import { useSelector } from "react-redux";
 import { buildParams, isUserAuthenticated } from "../../utils/utils";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Dropdown = (props) => {
   const primary = "#0275FF";
   const hoverColor = "#80C4FF";
